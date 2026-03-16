@@ -36,10 +36,20 @@ android {
 }
 
 dependencies {
+
+    // Retrofit for API calls
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    // Gson converter to convert JSON -> Java objects
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Android UI libraries
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
