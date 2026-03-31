@@ -1,5 +1,7 @@
 package com.example.jpl2;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,53 +27,61 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        try{
+            emailInput = findViewById(R.id.emailInput);
+            passwordInput = findViewById(R.id.passwordInput);
+            loginBtn = findViewById(R.id.loginBtn);
 
-        emailInput = findViewById(R.id.emailInput);
-        passwordInput = findViewById(R.id.passwordInput);
-        loginBtn = findViewById(R.id.loginBtn);
+            loginBtn.setOnClickListener(v -> loginUser());
+        }catch (Exception e){
+            Toast.makeText(LoginActivity.this, e.toString(), LENGTH_LONG).show();
+        }
 
-        loginBtn.setOnClickListener(v -> loginUser());
+
     }
 
     private void loginUser(){
+        try {
+            String email = emailInput.getText().toString().trim();
+            String password = passwordInput.getText().toString().trim();
 
-        String email = emailInput.getText().toString().trim();
-        String password = passwordInput.getText().toString().trim();
+            ApiService apiService =
+                    RetrofitClient.getClient().create(ApiService.class);
 
-        ApiService apiService =
-                RetrofitClient.getClient().create(ApiService.class);
+            LoginRequest request = new LoginRequest(email, password);
 
-        LoginRequest request = new LoginRequest(email, password);
+            Call<LoginResponse> call = apiService.login(request);
 
-        Call<LoginResponse> call = apiService.login(request);
+            call.enqueue(new Callback<LoginResponse>() {
 
-        call.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    if(response.isSuccessful()){
 
-                if(response.isSuccessful()){
+                        Toast.makeText(LoginActivity.this,
+                                "Login Successful",
+                                Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(LoginActivity.this,
-                            "Login Successful",
-                            Toast.LENGTH_SHORT).show();
+                    } else {
 
-                } else {
-
-                    Toast.makeText(LoginActivity.this,
-                            "Invalid Credentials",
-                            Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,
+                                "Invalid Credentials",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
 
-                Toast.makeText(LoginActivity.this,
-                        "Server Error: " + t.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+                    Toast.makeText(LoginActivity.this,
+                            "Server Error: " + t.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(LoginActivity.this, e.toString(), LENGTH_LONG).show();
+        }
 
     }
 }
