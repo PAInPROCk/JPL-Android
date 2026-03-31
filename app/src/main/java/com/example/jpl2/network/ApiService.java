@@ -1,4 +1,7 @@
-package com.example.jpl2.api;
+package com.example.jpl2.network;
+
+import com.example.jpl2.model.LoginRequest;
+import com.example.jpl2.model.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -1,4 +1,4 @@
-package com.example.jpl2.api;
+package com.example.jpl2.model;
 
 public class LoginRequest {
 

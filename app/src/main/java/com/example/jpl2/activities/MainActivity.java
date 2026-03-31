@@ -1,4 +1,4 @@
-package com.example.jpl2;
+package com.example.jpl2.activities;
 
 import android.os.Bundle;
 import android.webkit.WebSettings;
@@ -6,6 +6,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.jpl2.R;
 
 public class MainActivity extends AppCompatActivity {
 
