@@ -1,4 +1,4 @@
-package com.example.jpl2;
+package com.example.jpl2.activities;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -10,6 +10,8 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.jpl2.R;
 
 public class MainActivity extends AppCompatActivity {
 

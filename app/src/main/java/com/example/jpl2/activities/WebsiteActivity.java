@@ -1,4 +1,4 @@
-package com.example.jpl2;
+package com.example.jpl2.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +8,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.jpl2.R;
 
 public class WebsiteActivity extends AppCompatActivity {
 
