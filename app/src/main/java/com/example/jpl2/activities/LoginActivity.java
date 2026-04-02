@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,13 +29,18 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.passwordInput);
         loginBtn = findViewById(R.id.loginBtn);
 
-        // Intialize viewModel
+        // Initialize viewModel
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
         // Button click call the ViewModel
         loginBtn.setOnClickListener(v -> {
             String email = emailInput.getText().toString().trim();
             String password = passwordInput.getText().toString().trim();
+
+            if(email.isEmpty() || password.isEmpty()){
+                Toast.makeText(this, "Enter email & password", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             viewModel.login(email, password);
         });
@@ -44,7 +50,10 @@ public class LoginActivity extends AppCompatActivity {
             if(result != null){
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
 
-                // TODO: Navigate to HomeActivity
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+
             }else{
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
             }

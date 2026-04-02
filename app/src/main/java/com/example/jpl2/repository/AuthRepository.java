@@ -18,12 +18,25 @@ public class AuthRepository {
         api.login(request).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                liveData.setValue(response.body());
+
+                if(response.isSuccessful() && response.body() != null){
+
+                    LoginResponse res = response.body();
+
+                    System.out.println("MESSAGE: " + res.message);
+                    System.out.println("USER: " + res.user);
+
+                    liveData.setValue(res);
+
+                } else {
+                    liveData.setValue(null);
+                }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 liveData.setValue(null);
+                t.printStackTrace();
             }
         });
     }
