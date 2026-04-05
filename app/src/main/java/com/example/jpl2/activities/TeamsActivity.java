@@ -1,0 +1,48 @@
+package com.example.jpl2.activities;
+
+import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.jpl2.R;
+import com.example.jpl2.viewmodel.TeamViewModel;
+import com.example.jpl2.adapter.TeamAdapter;
+
+public class TeamsActivity extends AppCompatActivity {
+
+    RecyclerView recyclerView;
+    TeamAdapter adapter;
+    TeamViewModel viewModel;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_teams);
+
+        recyclerView = findViewById(R.id.recyclerTeams);
+        recyclerView.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        );
+
+        viewModel = new ViewModelProvider(this).get(TeamViewModel.class);
+
+        viewModel.fetchTeams();
+
+        viewModel.getTeams().observe(this, teams -> {
+            if (teams != null) {
+                Toast.makeText(this, "Teams loaded: " + teams.size(), Toast.LENGTH_SHORT).show();
+                adapter = new TeamAdapter(this, teams);
+                recyclerView.setPadding(40, 0, 40, 0);
+                recyclerView.setClipToPadding(false);
+                recyclerView.setAdapter(adapter);
+            } else {
+                Toast.makeText(this, "Failed to load teams", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}

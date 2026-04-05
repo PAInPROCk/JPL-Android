@@ -1,145 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.HomeActivity">
+    android:background="#E5E1E6">
 
+    <!-- HEADER -->z
     <TextView
-        android:id="@+id/tv_intro_jpl"
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
+        android:background="#87CEEB"
         android:text="JPL AUCTION"
         android:textAlignment="center"
-        android:background="#87CEEB"/>
+        android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/tv_register"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/tv_intro_jpl"
-        android:text="JPL Auction! \n Starting Soon!"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:background="#87CEEB" />
-
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/tv_register"
-        android:layout_marginTop="-100dp"
-        android:layout_marginLeft="75dp"
-        android:text="Register Now" />
-
+    <!-- BANNER -->
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_register"
-        android:rowCount="3"
-        android:columnCount="3"
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
         android:layout_marginTop="30dp"
-        android:padding="16dp">
+        android:layout_below="@id/header"
+        android:background="#87CEEB">
 
-        <!-- Button Teams -->
-        <Button
-            android:id="@+id/btn_teams"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@id/tv_register"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="41dp"
-            android:background="@drawable/button_box"
-            app:icon="@drawable/teamsIcon"
-            app:iconSize="50dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:text="Teams" />
-
-        <!-- Button Players -->
-        <Button
-            android:id="@+id/btn_players"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@id/tv_register"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="39dp"
-            android:background="@drawable/button_box"
-            android:text="Players" />
-
-        <!-- Button Auction -->
-        <Button
-            android:id="@+id/btn_auction"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@id/tv_register"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="39dp"
-            android:background="@drawable/button_box"
-            app:icon="@drawable/auctionicon"
-            app:iconSize="50dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:text="Auction" />
-
-        <!-- Button Registration -->
-        <Button
-            android:id="@+id/btn_registration"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@+id/btn_teams"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="39dp"
-            app:icon="@drawable/registrationicon"
-            app:iconSize="35dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:background="@drawable/button_box"
-            android:text="Registration" />
-
-        <!-- Button Admin-->
-        <Button
-            android:id="@+id/btn_admin"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@+id/btn_players"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="39dp"
-            app:icon="@drawable/adminicon"
-            app:iconSize="50dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:background="@drawable/button_box"
-            android:text="Admin" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="JPL Auction!\nStarting Soon!"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"/>
 
         <Button
-            android:id="@+id/btn_login"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@+id/btn_auction"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="39dp"
-            app:icon="@drawable/loginicon"
-            app:iconSize="50dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:background="@drawable/button_box"
-            android:text="Login" />
-
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:text="Register Now"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/button_box"/>
     </RelativeLayout>
-    </RelativeLayout>
+
+    <!-- GRID CONTAINER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/banner"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:padding="20dp">
+
+        <!-- ROW 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/btn_teams"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_box"
+                app:icon="@drawable/teamsicon"
+                app:iconGravity="top"
+                app:iconSize="40dp"
+                android:text="Teams"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/btn_players"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_box"
+                app:icon="@drawable/teamsicon"
+                app:iconGravity="top"
+                app:iconSize="40dp"
+                android:text="Players"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/btn_auction"
+                android:background="@drawable/button_box"
+                app:icon="@drawable/auctionicon"
+                app:iconGravity="top"
+                app:iconSize="40dp"
+                android:text="Auction"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- SPACE -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+        <!-- ROW 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/btn_registration"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_box"
+                app:icon="@drawable/registrationicon"
+                app:iconGravity="top"
+                app:iconSize="40dp"
+                android:text="Registration"
+                android:gravity="center"
+                android:maxLines="2"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/btn_admin"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_box"
+                app:icon="@drawable/adminicon"
+                app:iconGravity="top"
+                app:iconSize="40dp"
+                android:text="Admin"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/btn_login"
+                android:background="@drawable/button_box"
+                app:icon="@drawable/loginicon"
+                app:iconGravity="top"
+                app:iconSize="40dp"
+                android:text="Login"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

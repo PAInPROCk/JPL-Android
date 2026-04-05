@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
             webView.setWebViewClient(new WebViewClient());
 
-            webView.loadUrl("http:// 192.168.0.107:3000");
+            webView.loadUrl("http://192.168.0.101:3000");
         }catch (Exception e){
             Toast.makeText(MainActivity.this, e.toString(), LENGTH_LONG).show();
         }

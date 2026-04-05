@@ -1,0 +1,57 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D0D1A">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#0D0B1A">
+
+        <ImageView
+            android:id="@+id/teamLogo"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/teamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/teamLogo"
+            android:layout_centerHorizontal="true"
+            android:text="Team Name"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/captain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/teamName"
+            android:layout_centerHorizontal="true"
+            android:text="Captain: N/A"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/captain"
+            android:layout_centerHorizontal="true"
+            android:text="Budget"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

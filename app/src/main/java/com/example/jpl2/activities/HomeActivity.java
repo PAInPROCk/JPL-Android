@@ -24,11 +24,11 @@ public class HomeActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        loginBtn = findViewById(R.id.loginBtn);
-        registerBtn = findViewById(R.id.registerBtn);
-        auctionBtn = findViewById(R.id.auctionBtn);
-        bidBtn = findViewById(R.id.bidBtn);
-        web = findViewById(R.id.web);
+        loginBtn = findViewById(R.id.btn_login);
+        registerBtn = findViewById(R.id.btn_registration);
+        auctionBtn = findViewById(R.id.btn_auction);
+        bidBtn = findViewById(R.id.btn_players); // or change based on logic
+        web = findViewById(R.id.btn_teams); // temporary mapping
 
         try {
 
@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(new Intent(this, LoginActivity.class)));
 
             web.setOnClickListener(v ->
-                    startActivity(new Intent(this, WebsiteActivity.class)));
+                    startActivity(new Intent(this, TeamsActivity.class)));
 
         } catch (Exception e) {
             Toast.makeText(HomeActivity.this, e.toString(), LENGTH_LONG).show();

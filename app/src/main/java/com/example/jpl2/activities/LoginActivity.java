@@ -47,15 +47,27 @@ public class LoginActivity extends AppCompatActivity {
 
         // observing live data from the result
         viewModel.getLoginResult().observe(this, result -> {
-            if(result != null){
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+            if (result != null && result.user != null) {
 
-            }else{
-                Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
+                String role = result.user.role;
+
+                if (role.equals("admin")) {
+                    Toast.makeText(LoginActivity.this, "Admin Login", Toast.LENGTH_SHORT).show();
+                }
+                else if (role.equals("team")) {
+                    Toast.makeText(LoginActivity.this, "Team Login", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Unknown role", Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
