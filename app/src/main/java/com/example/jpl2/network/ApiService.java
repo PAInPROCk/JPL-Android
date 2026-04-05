@@ -2,7 +2,7 @@ package com.example.jpl2.network;
 
 import com.example.jpl2.model.LoginRequest;
 import com.example.jpl2.model.LoginResponse;
-import com.example.jpl2.model.Player;
+import com.example.jpl2.model.PlayerResponse;
 import com.example.jpl2.model.TeamResponse;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface ApiService {
     Call<LoginResponse> login(@Body LoginRequest request);
 
     @GET("players")
-    Call<List<Player>> getPlayers();
+    Call<PlayerResponse> getPlayers();
 
     @GET("teams")
     Call<TeamResponse> getTeams();
