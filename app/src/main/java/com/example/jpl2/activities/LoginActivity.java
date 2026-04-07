@@ -54,6 +54,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (role.equals("admin")) {
                     Toast.makeText(LoginActivity.this, "Admin Login", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 else if (role.equals("team")) {
                     Toast.makeText(LoginActivity.this, "Team Login", Toast.LENGTH_SHORT).show();
