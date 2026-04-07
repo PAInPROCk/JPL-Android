@@ -12,8 +12,13 @@ import java.util.List;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder> {
     private List<Player> players;
+    private OnPlayerClickListener listener;
+    public interface OnPlayerClickListener{
+        void onClick(Player player);
+    }
 
-    public PlayerAdapter(List<Player> players){
+    public PlayerAdapter(List<Player> players, OnPlayerClickListener listener){
+        this.listener = listener;
         this.players = players;
     }
 
@@ -40,8 +45,14 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
         Player player = players.get(position);
 
         holder.name.setText(player.getName());
+        holder.role.setText(player.getRole() != null ? player.getRole() : "Unknown");
         holder.price.setText("₹ "+ player.getBasePrice());
-        holder.role.setText(player.getRole());
+
+        holder.itemView.setOnClickListener(v -> {
+            if(listener != null){
+                listener.onClick(player);
+            }
+        });
     }
 
     @Override
