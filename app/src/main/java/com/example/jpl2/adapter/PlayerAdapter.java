@@ -1,5 +1,7 @@
 package com.example.jpl2.adapter;
 
+import static com.example.jpl2.api.ApiClient.BASE_URL;
+
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import android.content.Intent;
@@ -51,11 +53,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
         holder.role.setText(player.getRole());
 
 // IMAGE LOAD
-        String imageUrl = "http://192.168.0.101:5000/" + player.getImagePath();
+        String imageUrl = BASE_URL + player.getImagePath();
 
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.player)
                 .into(holder.image);
 
 // CLICK → DETAILS
