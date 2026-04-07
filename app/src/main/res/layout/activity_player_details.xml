@@ -1,35 +1,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:padding="12dp">
+    android:orientation="vertical"
+    android:background="#0B0B1F"
+    android:padding="20dp">
 
     <ImageView
         android:id="@+id/playerImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:contentDescription="Player Image" />
 
     <TextView
         android:id="@+id/playerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="22sp"
         android:textColor="#FFFFFF"
-        android:gravity="center"
-        android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:id="@+id/playerPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#AAAAAA"/>
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:id="@+id/playerRole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#AAAAAA"/>
+        android:textColor="#CCCCCC"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/playerPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#CCCCCC"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

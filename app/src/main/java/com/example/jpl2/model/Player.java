@@ -1,22 +1,29 @@
 package com.example.jpl2.model;
 
 public class Player {
-    private int id;
+    private int player_id;
     private String name;
-    private int basePrice;
-    private String role;
+    private int base_price;
+    private String type;
+    private String image_path;
 
-    public int getId(){ return id; }
-
-    public String getName(){
-        return  name;
+    public int getPlayerId() {
+        return player_id;
     }
 
-    public int getBasePrice(){
-        return basePrice;
+    public String getName() {
+        return name;
     }
 
-    public String getRole(){
-        return role;
+    public int getBasePrice() {
+        return base_price;
+    }
+
+    public String getRole() {
+        return type;
+    }
+
+    public String getImagePath() {
+        return image_path;
     }
 }

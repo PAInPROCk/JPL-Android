@@ -38,6 +38,9 @@ public class HomeActivity extends AppCompatActivity {
             web.setOnClickListener(v ->
                     startActivity(new Intent(this, TeamsActivity.class)));
 
+            bidBtn.setOnClickListener(v ->
+                    startActivity(new Intent(this, PlayerActivity.class)));
+
         } catch (Exception e) {
             Toast.makeText(HomeActivity.this, e.toString(), LENGTH_LONG).show();
         }
