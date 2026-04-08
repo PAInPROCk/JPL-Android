@@ -25,7 +25,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         loginBtn = findViewById(R.id.btn_login);
-        registerBtn = findViewById(R.id.btn_registration);
+        registerBtn = findViewById(R.id.btn_registration); //Takes to registration page for player
         auctionBtn = findViewById(R.id.btn_auction);
         bidBtn = findViewById(R.id.btn_players); // or change based on logic
         web = findViewById(R.id.btn_teams); // temporary mapping
@@ -44,6 +44,8 @@ public class HomeActivity extends AppCompatActivity {
             adminbtn.setOnClickListener(v ->
                     startActivity(new Intent(this, AdminActivity.class))); //For testing there is no auth check //todo Add auth check so that only admin users can acces the page
 
+            registerBtn.setOnClickListener(v ->
+                    startActivity(new Intent(this, RegistrationActivity.class)));
         } catch (Exception e) {
             Toast.makeText(HomeActivity.this, e.toString(), LENGTH_LONG).show();
         }
