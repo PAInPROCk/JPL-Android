@@ -5,141 +5,140 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C8FF46"
     tools:context=".activities.HomeActivity">
 
     <TextView
         android:id="@+id/tv_intro_jpl"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:text="JPL AUCTION"
+        android:text="AUCTION"
         android:textAlignment="center"
+        android:textStyle="bold"
         android:background="#87CEEB"/>
 
-    <TextView
-        android:id="@+id/tv_register"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/tv_intro_jpl"
-        android:text="JPL Auction! \n Starting Soon!"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:background="#87CEEB" />
-
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/tv_register"
-        android:layout_marginTop="-100dp"
-        android:layout_marginLeft="75dp"
-        android:text="Register Now" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_register"
-        android:rowCount="3"
-        android:columnCount="3"
-        android:layout_marginTop="30dp"
-        android:padding="16dp">
+        android:padding="24dp"
+        android:layout_below="@id/tv_intro_jpl"
+        android:backgroundTint="#777179"
+        android:id="@+id/admin_auc_set"
+        android:layout_margin="12dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rowCount="3"
+            android:columnCount="3"
+            android:layout_marginTop="0dp"
+            android:padding="16dp">
 
-        <!-- Button Teams -->
-        <Button
-            android:id="@+id/btn_teams"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@id/tv_register"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="41dp"
-            android:background="@drawable/button_box"
-            app:icon="@drawable/teamsicon"
-            app:iconSize="50dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:text="Teams" />
+            <!-- Button Teams -->
+            <Button
+                android:id="@+id/btn_teams"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_box"
+                app:icon="@drawable/teamsicon"
+                app:iconSize="50dp"
+                app:iconPadding="8dp"
+                app:iconGravity="top"
+                android:text="Teams"
+                android:textColor="@color/white"/>
 
-        <!-- Button Players -->
-        <Button
-            android:id="@+id/btn_players"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@id/tv_register"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="39dp"
-            android:background="@drawable/button_box"
-            android:text="Players" />
+            <!-- Button Players -->
+            <Button
+                android:id="@+id/btn_players"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_alignParentStart="false"
+                android:layout_toEndOf="@id/btn_teams"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_box"
+                android:text="Players"
+                android:textColor="@color/white"/>
 
-        <!-- Button Auction -->
-        <Button
-            android:id="@+id/btn_auction"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@id/tv_register"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="39dp"
-            android:background="@drawable/button_box"
-            app:icon="@drawable/auctionicon"
-            app:iconSize="50dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:text="Auction" />
+            <!-- Button Auction -->
+            <Button
+                android:id="@+id/btn_auction"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_alignParentStart="false"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@id/btn_players"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_box"
+                app:icon="@drawable/auctionicon"
+                app:iconSize="50dp"
+                app:iconPadding="8dp"
+                app:iconGravity="top"
+                android:text="Auction"
+                android:textColor="@color/white"/>
 
-        <!-- Button Registration -->
-        <Button
-            android:id="@+id/btn_registration"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@+id/btn_teams"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="39dp"
-            app:icon="@drawable/registrationicon"
-            app:iconSize="35dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:background="@drawable/button_box"
-            android:text="Registration" />
+            <!-- Button Registration -->
+            <Button
+                android:id="@+id/btn_registration"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_below="@+id/btn_teams"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="35dp"
+                app:icon="@drawable/registrationicon"
+                app:iconSize="35dp"
+                app:iconPadding="2dp"
+                app:iconGravity="top"
+                android:background="@drawable/button_box"
+                android:text="Register"
+                android:textColor="@color/white" />
 
-        <!-- Button Admin-->
-        <Button
-            android:id="@+id/btn_admin"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@+id/btn_players"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="39dp"
-            app:icon="@drawable/adminicon"
-            app:iconSize="50dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:background="@drawable/button_box"
-            android:text="Admin" />
+            <!-- Button Admin-->
+            <Button
+                android:id="@+id/btn_admin"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_below="@+id/btn_players"
+                android:layout_alignParentStart="false"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="35dp"
+                android:layout_toEndOf="@id/btn_registration"
+                app:icon="@drawable/adminicon"
+                app:iconSize="50dp"
+                app:iconPadding="8dp"
+                app:iconGravity="top"
+                android:background="@drawable/button_box"
+                android:text="Admin"
+                android:textColor="@color/white"/>
 
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_columnWeight="1"
-            android:layout_below="@+id/btn_auction"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="39dp"
-            app:icon="@drawable/loginicon"
-            app:iconSize="50dp"
-            app:iconPadding="8dp"
-            app:iconGravity="top"
-            android:background="@drawable/button_box"
-            android:text="Login" />
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_below="@+id/btn_auction"
+                android:layout_alignParentStart="false"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="35dp"
+                android:layout_toEndOf="@id/btn_admin"
+                app:icon="@drawable/loginicon"
+                app:iconSize="50dp"
+                app:iconPadding="8dp"
+                app:iconGravity="top"
+                android:background="@drawable/button_box"
+                android:text="Login"
+                android:textColor="@color/white"/>
 
-    </RelativeLayout>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
     </RelativeLayout>

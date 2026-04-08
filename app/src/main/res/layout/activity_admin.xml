@@ -29,6 +29,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical"
             android:padding="24dp">
             <TextView
@@ -95,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/white"
             android:padding="16dp">
             <TextView
                 android:layout_width="wrap_content"
@@ -118,7 +120,6 @@
                     android:text="Choose File"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:textAllCaps="false"/>
                 <View
                     android:layout_width="1dp"
