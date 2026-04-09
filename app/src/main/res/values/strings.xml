@@ -2,4 +2,8 @@
     <string name="app_name">JPL2</string>
     <string name="admin">Admin Panel</string>
     <string name="admin_set">Auction Setup &amp; Registration</string>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>
