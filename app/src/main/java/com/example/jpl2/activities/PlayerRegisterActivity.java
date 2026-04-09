@@ -29,7 +29,7 @@ public class PlayerRegisterActivity extends AppCompatActivity {
 
         etName = findViewById(R.id.playerName);
         etRole = findViewById(R.id.role);
-        etPrice = findViewById(R.id.basePrice);
+        etPrice = findViewById(R.id.pBasePrice);
         btnSubmit = findViewById(R.id.btnSubmit);
 
         viewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
