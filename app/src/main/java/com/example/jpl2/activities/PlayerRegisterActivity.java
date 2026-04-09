@@ -27,9 +27,9 @@ public class PlayerRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_register);
 
-        etName = findViewById(R.id.etName);
-        etRole = findViewById(R.id.etRole);
-        etPrice = findViewById(R.id.etPrice);
+        etName = findViewById(R.id.playerName);
+        etRole = findViewById(R.id.role);
+        etPrice = findViewById(R.id.basePrice);
         btnSubmit = findViewById(R.id.btnSubmit);
 
         viewModel = new ViewModelProvider(this).get(PlayerViewModel.class);

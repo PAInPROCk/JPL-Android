@@ -13,7 +13,7 @@ import com.example.jpl2.R;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button loginBtn, registerBtn, auctionBtn, bidBtn, web, adminbtn;
+    Button teamsBtn, playersBtn, auctionBtn, registrationBtn, adminBtn, loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,28 +24,39 @@ public class HomeActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        loginBtn = findViewById(R.id.btn_login);
-        registerBtn = findViewById(R.id.btn_registration); //Takes to registration page for player
+        // Match IDs with your XML
+        teamsBtn = findViewById(R.id.btn_teams);
+        playersBtn = findViewById(R.id.btn_players);
         auctionBtn = findViewById(R.id.btn_auction);
-        bidBtn = findViewById(R.id.btn_players); // or change based on logic
-        web = findViewById(R.id.btn_teams); // temporary mapping
-        adminbtn = findViewById(R.id.btn_admin); //Takes to admin page
+        registrationBtn = findViewById(R.id.btn_registration);
+        adminBtn = findViewById(R.id.btn_admin);
+        loginBtn = findViewById(R.id.btn_login);
 
         try {
-
+            // Example: Login button opens LoginActivity
             loginBtn.setOnClickListener(v ->
-                    startActivity(new Intent(this, LoginActivity.class)));
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
 
-            web.setOnClickListener(v ->
-                    startActivity(new Intent(this, TeamsActivity.class)));
+            // Example: Auction button opens AuctionActivity
+//            auctionBtn.setOnClickListener(v ->
+//                    startActivity(new Intent(HomeActivity.this, AuctionActivity.class)));
 
-            bidBtn.setOnClickListener(v ->
-                    startActivity(new Intent(this, PlayerActivity.class)));
-            adminbtn.setOnClickListener(v ->
-                    startActivity(new Intent(this, AdminActivity.class))); //For testing there is no auth check //todo Add auth check so that only admin users can acces the page
+            // Example: Teams button opens TeamsActivity
+            teamsBtn.setOnClickListener(v ->
+                    startActivity(new Intent(HomeActivity.this, TeamsActivity.class)));
 
-            registerBtn.setOnClickListener(v ->
-                    startActivity(new Intent(this, RegistrationActivity.class)));
+            // Example: Players button opens PlayersActivity
+            playersBtn.setOnClickListener(v ->
+                    startActivity(new Intent(HomeActivity.this, PlayerActivity.class)));
+
+            // Example: Registration button opens RegistrationActivity
+            registrationBtn.setOnClickListener(v ->
+                    startActivity(new Intent(HomeActivity.this, RegistrationActivity.class)));
+
+            // Example: Admin button opens AdminActivity
+            adminBtn.setOnClickListener(v ->
+                    startActivity(new Intent(HomeActivity.this, AdminActivity.class)));
+
         } catch (Exception e) {
             Toast.makeText(HomeActivity.this, e.toString(), LENGTH_LONG).show();
         }
