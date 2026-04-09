@@ -1,6 +1,8 @@
 package com.example.jpl2.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +17,18 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_admin);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        Button btnPlayer = findViewById(R.id.btnPlayerReg);
+        Button btnTeam = findViewById(R.id.btnTeamReg);
+
+        btnPlayer.setOnClickListener(v -> {
+            startActivity(new Intent(AdminActivity.this, PlayerRegisterActivity.class));
+        });
+
+        btnTeam.setOnClickListener(v -> {
+            startActivity(new Intent(this, TeamRegisterActivity.class));
         });
     }
 }

@@ -19,16 +19,23 @@ public class AuthRepository {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
+                System.out.println("RAW RESPONSE: " + response.body());
+
                 if(response.isSuccessful() && response.body() != null){
 
                     LoginResponse res = response.body();
 
                     System.out.println("MESSAGE: " + res.message);
-                    System.out.println("USER: " + res.user);
+                    System.out.println("USER OBJECT: " + res.user);
+
+                    if(res.user != null){
+                        System.out.println("ROLE: " + res.user.role);
+                    }
 
                     liveData.setValue(res);
 
                 } else {
+                    System.out.println("LOGIN FAILED RESPONSE");
                     liveData.setValue(null);
                 }
             }

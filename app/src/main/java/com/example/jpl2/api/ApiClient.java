@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://jpl-backend-6ecq.onrender.com/";
+    public static final String BASE_URL = "http://192.168.0.101:5000/";
 
     private static Retrofit retrofit;
 

@@ -1,7 +1,8 @@
 package com.example.jpl2.model;
 
-public class LoginResponse {
+import com.google.gson.annotations.SerializedName;
 
+public class LoginResponse {
     public String message;
     public User user;
 
@@ -9,8 +10,14 @@ public class LoginResponse {
         public int id;
         public String name;
         public String role;
-        public Integer team_id;
-        public double team_purse;
-        public String team_logo;
+
+        @SerializedName("team_id")
+        public Integer teamId;
+
+        @SerializedName("team_purse")
+        public int teamPurse;
+
+        @SerializedName("team_logo")
+        public String teamLogo;
     }
 }

@@ -18,6 +18,12 @@
             android:name=".activities.RegistrationActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.TeamRegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PlayerRegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.PlayerDetailsActivity"
             android:exported="false" />
         <activity
@@ -28,7 +34,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true" />

@@ -9,6 +9,9 @@ import com.example.jpl2.repository.PlayerRepository;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class PlayerViewModel extends ViewModel {
     private MutableLiveData<List<Player>> playerList = new MutableLiveData<>();
     private PlayerRepository repository = new PlayerRepository();
@@ -19,5 +22,19 @@ public class PlayerViewModel extends ViewModel {
 
     public  void loadPlayers(){
         repository.getPlayers(playerList);
+    }
+
+    public void addPlayer(
+            RequestBody playerName,
+            RequestBody fatherName,
+            RequestBody surName,
+            RequestBody nickName,
+            RequestBody category,
+            RequestBody style,
+            RequestBody basePrice,
+            MultipartBody.Part image
+    ){
+        repository.addPlayer(playerName, fatherName, surName,
+                nickName, category, style, basePrice, image);
     }
 }
