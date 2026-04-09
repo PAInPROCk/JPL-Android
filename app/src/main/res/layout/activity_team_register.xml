@@ -4,9 +4,165 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="#FBFF2C"
     android:layout_height="match_parent"
     tools:context=".activities.TeamRegister">
 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:columnCount="3"
+        android:padding="12dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="12dp">
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/playerImage"
+                android:src="@drawable/teams"
+                android:scaleType="centerCrop"
+                android:background="@drawable/image_border"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Image"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="#D9E2FA"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#4CAF50"
+                android:gravity="center_horizontal"
+                android:padding="6dp"
+                android:text="Team Name"
+                android:textColor="#fff" />
+
+            <EditText
+                android:id="@+id/playerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_box"
+                android:hint="  Enter team name"
+                android:inputType="text" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="#D9E2FA"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#4CAF50"
+                android:gravity="center_horizontal"
+                android:padding="6dp"
+                android:text="Captain Name"
+                android:textColor="#fff" />
+
+            <EditText
+                android:id="@+id/captainName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_box"
+                android:hint="  Enter captain name"
+                android:inputType="text" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="#D9E2FA"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#4CAF50"
+                android:gravity="center_horizontal"
+                android:padding="6dp"
+                android:text="Mobile Number"
+                android:textColor="#fff" />
+
+            <EditText
+                android:id="@+id/teammobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_box"
+                android:hint="  Enter Mobile Number"
+                android:inputType="number" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="#D9E2FA"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#4CAF50"
+                android:gravity="center_horizontal"
+                android:padding="6dp"
+                android:text="Email"
+                android:textColor="#fff" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_box"
+                android:hint="  Enter email"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FBFF2C"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:padding="1dp">
 
 
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+    </GridLayout>
 </ScrollView>
