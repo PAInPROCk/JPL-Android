@@ -57,7 +57,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/playerName"
+                android:id="@+id/etplayerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -85,7 +85,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/fatherName"
+                android:id="@+id/etfatherName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -111,7 +111,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/surName"
+                android:id="@+id/etsurName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -138,7 +138,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/nickName"
+                android:id="@+id/etnickName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -166,7 +166,7 @@
                 android:textColor="#fff" />
 
             <Spinner
-                android:id="@+id/genderspinner"
+                android:id="@+id/etgenderspinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown" />
@@ -190,7 +190,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/mobile"
+                android:id="@+id/etmobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -218,7 +218,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/age"
+                android:id="@+id/etage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -246,7 +246,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/role"
+                android:id="@+id/etrole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -274,7 +274,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/category"
+                android:id="@+id/etcategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -302,7 +302,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/category"
+                android:id="@+id/etStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -330,12 +330,28 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/category"
+                android:id="@+id/etBasePrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
                 android:hint="  Enter Category"
                 android:inputType="number" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit Player"
+                android:backgroundTint="#8D78FF"
+                android:textColor="#FFFFFF"/>
+
         </LinearLayout>
     </GridLayout>
 

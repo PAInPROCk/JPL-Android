@@ -8,6 +8,8 @@ import com.example.jpl2.repository.TeamRepository;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
+
 public class TeamViewModel extends ViewModel {
 
     private final MutableLiveData<List<TeamResponse.Team>> teamsLiveData = new MutableLiveData<>();
@@ -19,5 +21,9 @@ public class TeamViewModel extends ViewModel {
 
     public MutableLiveData<List<TeamResponse.Team>> getTeams() {
         return teamsLiveData;
+    }
+
+    public void addTeam(RequestBody teamName, RequestBody owner, RequestBody purse){
+        repository.addTeam(teamName, owner, purse);
     }
 }
