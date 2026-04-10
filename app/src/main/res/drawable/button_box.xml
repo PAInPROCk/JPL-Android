@@ -3,6 +3,7 @@
 
     <!-- Background color: dull white -->
     <solid android:color="#F5F5F5"/> <!-- Light grayish white -->
+    <gradient android:endColor="@color/white"/>
 
     <!-- Border (optional, makes it look boxed) -->
     <stroke

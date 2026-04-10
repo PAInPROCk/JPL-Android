@@ -16,9 +16,8 @@ import okhttp3.RequestBody;
 
 public class TeamRegisterActivity extends AppCompatActivity {
 
-    EditText etTeamName, etOwner, etPurse;
+    EditText etTeamName, etCaptain, etMobile, etEmail;
     Button btnSubmit;
-
     TeamViewModel viewModel;
 
     @Override
@@ -27,28 +26,31 @@ public class TeamRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_team_register);
 
         etTeamName = findViewById(R.id.etTeamName);
-        etOwner = findViewById(R.id.etOwner);
-        etPurse = findViewById(R.id.etPurse);
-        btnSubmit = findViewById(R.id.btnSubmitTeam);
+        etCaptain = findViewById(R.id.etCaptain);
+        etMobile = findViewById(R.id.etMobile);
+        etEmail = findViewById(R.id.email);
+        btnSubmit = findViewById(R.id.btnSubmit);
 
         viewModel = new ViewModelProvider(this).get(TeamViewModel.class);
 
         btnSubmit.setOnClickListener(v -> {
 
             String teamName = etTeamName.getText().toString();
-            String owner = etOwner.getText().toString();
-            String purse = etPurse.getText().toString();
+            String captain = etCaptain.getText().toString();
+            String mobile = etMobile.getText().toString();
+            String email = etEmail.getText().toString();
 
-            if(teamName.isEmpty() || owner.isEmpty() || purse.isEmpty()){
+            if(teamName.isEmpty() || captain.isEmpty() || mobile.isEmpty() || email.isEmpty()){
                 Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             RequestBody teamNameBody = RequestBody.create(MediaType.parse("text/plain"), teamName);
-            RequestBody ownerBody = RequestBody.create(MediaType.parse("text/plain"), owner);
-            RequestBody purseBody = RequestBody.create(MediaType.parse("text/plain"), purse);
+            RequestBody captainBody = RequestBody.create(MediaType.parse("text/plain"), captain);
+            RequestBody mobileBody = RequestBody.create(MediaType.parse("text/plain"), mobile);
+            RequestBody emailBody = RequestBody.create(MediaType.parse("text/plain"), email);
 
-            viewModel.addTeam(teamNameBody, ownerBody, purseBody);
+            viewModel.addTeam(teamNameBody, captainBody, mobileBody, emailBody);
 
             Toast.makeText(this, "Team Submitted", Toast.LENGTH_SHORT).show();
         });

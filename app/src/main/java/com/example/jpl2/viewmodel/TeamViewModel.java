@@ -23,7 +23,7 @@ public class TeamViewModel extends ViewModel {
         return teamsLiveData;
     }
 
-    public void addTeam(RequestBody teamName, RequestBody owner, RequestBody purse){
-        repository.addTeam(teamName, owner, purse);
+    public void addTeam(RequestBody teamName, RequestBody captain, RequestBody mobile, RequestBody email){
+        repository.addTeam(teamName, captain, mobile, email);
     }
 }

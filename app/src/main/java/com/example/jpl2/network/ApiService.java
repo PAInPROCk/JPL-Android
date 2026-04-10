@@ -51,8 +51,9 @@ public interface ApiService {
     Call<ResponseBody> addTeam(
             @Header("Cookie") String cookie,
             @Part("teamName") RequestBody teamName,
-            @Part("owner") RequestBody owner,
-            @Part("purse") RequestBody purse
+            @Part("captain") RequestBody captain,
+            @Part("mobile") RequestBody mobile,
+            @Part("email") RequestBody email
     );
 
 }

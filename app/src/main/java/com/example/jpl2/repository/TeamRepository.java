@@ -39,13 +39,13 @@ public class TeamRepository {
             }
         });
     }
-    public void addTeam(RequestBody teamName, RequestBody owner, RequestBody purse){
+    public void addTeam(RequestBody teamName, RequestBody captain, RequestBody mobile, RequestBody email){
 
         ApiService api = ApiClient.getClient().create(ApiService.class);
 
-        String cookie = "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInRlYW1faWQiOm51bGwsIm5hbWUiOiJQcmF0aGFtZXNoIEFkbWluIiwidGVhbV9wdXJzZSI6MCwidGVhbV9sb2dvIjpudWxsLCJleHAiOjE3NzU4MjQ2NTd9.zuFPiEZGJp7OLUKHa7S10BHHMSRF3TEi5w3Bvuo7djQ"; // same as player
+        String cookie = "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInRlYW1faWQiOm51bGwsIm5hbWUiOiJQcmF0aGFtZXNoIEFkbWluIiwidGVhbV9wdXJzZSI6MCwidGVhbV9sb2dvIjpudWxsLCJleHAiOjE3NzU4NDczNDh9.of4WEIIBTynuMKBsYxiCr-GtbQqiMNj4_k8PicFL9u8";
 
-        api.addTeam(cookie, teamName, owner, purse)
+        api.addTeam(cookie, teamName, captain, mobile, email)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

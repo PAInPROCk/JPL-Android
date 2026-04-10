@@ -72,6 +72,7 @@ public class PlayerRegisterActivity extends AppCompatActivity {
             RequestBody categoryBody = RequestBody.create(MediaType.parse("text/plain"), category);
             RequestBody styleBody = RequestBody.create(MediaType.parse("text/plain"), style);
             RequestBody basePrice = RequestBody.create(MediaType.parse("text/plain"), price);
+
             // TEMP: No image
             MultipartBody.Part imagePart = null;
 
