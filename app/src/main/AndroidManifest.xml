@@ -34,6 +34,7 @@
             android:name=".activities.LoginActivity"
             android:exported="true" />
 
+        <activity android:name=".activities.PlayerRegisterActivity"/>
         <!-- Other activities -->
         <activity android:name=".activities.AdminActivity" android:exported="false" />
         <activity android:name=".activities.PlayerActivity" android:exported="false" />
