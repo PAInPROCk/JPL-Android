@@ -54,7 +54,7 @@ public class PlayerRepository {
     ){
         ApiService api = ApiClient.getClient().create(ApiService.class);
 
-        String cookie = "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInRlYW1faWQiOm51bGwsIm5hbWUiOiJQcmF0aGFtZXNoIEFkbWluIiwidGVhbV9wdXJzZSI6MCwidGVhbV9sb2dvIjpudWxsLCJleHAiOjE3NzU3Mzk3OTZ9.sQJCkUcYS13AnqHMpVS3iMlnXMu3Ng9evsEjGtUEQQ4"; // TEMP (we fix properly next)
+        String cookie = "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInRlYW1faWQiOm51bGwsIm5hbWUiOiJQcmF0aGFtZXNoIEFkbWluIiwidGVhbV9wdXJzZSI6MCwidGVhbV9sb2dvIjpudWxsLCJleHAiOjE3NzU4NDczNDh9.of4WEIIBTynuMKBsYxiCr-GtbQqiMNj4_k8PicFL9u8"; // TEMP (we fix properly next)
 
         api.addPlayer(cookie, playerName, fatherName, surName, nickName,
                         category, style, basePrice, image)

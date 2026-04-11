@@ -56,7 +56,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/playerName"
+                android:id="@+id/etTeamName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -84,7 +84,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/captainName"
+                android:id="@+id/etCaptain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -112,7 +112,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/teammobile"
+                android:id="@+id/etMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"

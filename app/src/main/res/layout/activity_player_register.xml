@@ -59,7 +59,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/playerName"
+                android:id="@+id/etplayerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -87,7 +87,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/fatherName"
+                android:id="@+id/etfatherName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -113,7 +113,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/surName"
+                android:id="@+id/etsurName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -140,7 +140,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/nickName"
+                android:id="@+id/etnickName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -168,7 +168,7 @@
                 android:textColor="#fff" />
 
             <Spinner
-                android:id="@+id/genderspinner"
+                android:id="@+id/etgenderspinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown" />
@@ -192,7 +192,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/mobile"
+                android:id="@+id/etmobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -220,7 +220,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/age"
+                android:id="@+id/etage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -248,7 +248,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/role"
+                android:id="@+id/etrole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -276,7 +276,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/category"
+                android:id="@+id/etcategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -304,7 +304,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/category"
+                android:id="@+id/etStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
@@ -332,7 +332,7 @@
                 android:textColor="#fff" />
 
             <EditText
-                android:id="@+id/pBasePrice"
+                android:id="@+id/etBasePrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"

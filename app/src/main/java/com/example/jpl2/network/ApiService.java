@@ -46,4 +46,14 @@ public interface ApiService {
     @GET("team/{id}")
     Call<TeamResponse.Team> getTeamById(@Path("id") int id);
 
+    @Multipart
+    @POST("add-team")
+    Call<ResponseBody> addTeam(
+            @Header("Cookie") String cookie,
+            @Part("teamName") RequestBody teamName,
+            @Part("captain") RequestBody captain,
+            @Part("mobile") RequestBody mobile,
+            @Part("email") RequestBody email
+    );
+
 }
