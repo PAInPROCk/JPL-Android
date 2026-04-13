@@ -22,6 +22,7 @@ public class AdminActivity extends AppCompatActivity {
 
         Button btnPlayer = findViewById(R.id.btnPlayerReg);
         Button btnTeam = findViewById(R.id.btnTeamReg);
+        Button startAuction = findViewById(R.id.startAuction);
 
         btnPlayer.setOnClickListener(v -> {
             startActivity(new Intent(AdminActivity.this, PlayerRegisterActivity.class));
@@ -29,6 +30,9 @@ public class AdminActivity extends AppCompatActivity {
 
         btnTeam.setOnClickListener(v -> {
             startActivity(new Intent(this, TeamRegisterActivity.class));
+        });
+        startAuction.setOnClickListener(v -> {
+            startActivity(new Intent(AdminActivity.this, AdminAuctionActivity.class));
         });
     }
 }
