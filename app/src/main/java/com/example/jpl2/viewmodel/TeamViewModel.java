@@ -1,5 +1,7 @@
 package com.example.jpl2.viewmodel;
 
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,15 +17,21 @@ public class TeamViewModel extends ViewModel {
     private final MutableLiveData<List<TeamResponse.Team>> teamsLiveData = new MutableLiveData<>();
     private final TeamRepository repository = new TeamRepository();
 
-    public void fetchTeams() {
-        repository.getTeams(teamsLiveData);
+    public void fetchTeams(Context context) {
+        repository.getTeams(context,teamsLiveData);
     }
 
     public MutableLiveData<List<TeamResponse.Team>> getTeams() {
         return teamsLiveData;
     }
 
-    public void addTeam(RequestBody teamName, RequestBody captain, RequestBody mobile, RequestBody email){
-        repository.addTeam(teamName, captain, mobile, email);
+    public void addTeam(
+            Context context,
+            RequestBody teamName,
+            RequestBody captain,
+            RequestBody mobile,
+            RequestBody email
+    ){
+        repository.addTeam(context, teamName, captain, mobile, email);
     }
 }

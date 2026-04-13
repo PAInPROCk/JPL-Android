@@ -31,7 +31,7 @@ public class TeamsActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(TeamViewModel.class);
 
-        viewModel.fetchTeams();
+        viewModel.fetchTeams(this);
 
         viewModel.getTeams().observe(this, teams -> {
             if (teams != null) {

@@ -1,5 +1,7 @@
 package com.example.jpl2.repository;
 
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.jpl2.api.ApiClient;
@@ -12,8 +14,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AuthRepository {
-    public void login(String email, String password, MutableLiveData<LoginResponse>liveData){
-        ApiService api = ApiClient.getClient().create(ApiService.class);
+    public void login(Context context,String email, String password, MutableLiveData<LoginResponse>liveData){
+        ApiService api = ApiClient.getClient(context).create(ApiService.class);
         LoginRequest request = new LoginRequest(email, password);
         api.login(request).enqueue(new Callback<LoginResponse>() {
             @Override

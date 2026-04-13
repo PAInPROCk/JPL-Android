@@ -50,7 +50,13 @@ public class TeamRegisterActivity extends AppCompatActivity {
             RequestBody mobileBody = RequestBody.create(MediaType.parse("text/plain"), mobile);
             RequestBody emailBody = RequestBody.create(MediaType.parse("text/plain"), email);
 
-            viewModel.addTeam(teamNameBody, captainBody, mobileBody, emailBody);
+            viewModel.addTeam(
+                    this,   // ✅ ADD CONTEXT
+                    teamNameBody,
+                    captainBody,
+                    mobileBody,
+                    emailBody
+            );
 
             Toast.makeText(this, "Team Submitted", Toast.LENGTH_SHORT).show();
         });

@@ -47,7 +47,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 
         Log.d("IMAGE_DEBUG", "Logo: " + team.getImagePath());
 
-        String imageurl = "http://192.168.0.101:5000/" + team.getImagePath();
+        String imageurl = "http://192.168.0.103:5000/" + team.getImagePath();
 
         Glide.with(holder.itemView.getContext())
                 .load(imageurl)

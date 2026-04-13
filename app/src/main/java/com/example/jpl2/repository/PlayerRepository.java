@@ -1,5 +1,6 @@
 package com.example.jpl2.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -20,8 +21,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PlayerRepository {
-    public void getPlayers(MutableLiveData<List<Player>>liveData){
-        ApiService api = ApiClient.getClient().create(ApiService.class);
+    public void getPlayers(Context context,MutableLiveData<List<Player>>liveData){
+        ApiService api = ApiClient.getClient(context).create(ApiService.class);
 
         api.getPlayers().enqueue(new Callback<PlayerResponse>() {
             @Override
@@ -43,6 +44,7 @@ public class PlayerRepository {
     }
 
     public void addPlayer(
+            Context context,
             RequestBody playerName,
             RequestBody fatherName,
             RequestBody surName,
@@ -52,12 +54,11 @@ public class PlayerRepository {
             RequestBody basePrice,
             MultipartBody.Part image
     ){
-        ApiService api = ApiClient.getClient().create(ApiService.class);
+        ApiService api = ApiClient.getClient(context).create(ApiService.class);
 
-        String cookie = "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInRlYW1faWQiOm51bGwsIm5hbWUiOiJQcmF0aGFtZXNoIEFkbWluIiwidGVhbV9wdXJzZSI6MCwidGVhbV9sb2dvIjpudWxsLCJleHAiOjE3NzU4NDczNDh9.of4WEIIBTynuMKBsYxiCr-GtbQqiMNj4_k8PicFL9u8"; // TEMP (we fix properly next)
-
-        api.addPlayer(cookie, playerName, fatherName, surName, nickName,
+        api.addPlayer(playerName, fatherName, surName, nickName,
                         category, style, basePrice, image)
+
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

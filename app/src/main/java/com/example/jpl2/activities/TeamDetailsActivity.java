@@ -39,7 +39,7 @@ public class TeamDetailsActivity extends AppCompatActivity {
 
         int teamId = getIntent().getIntExtra("team_id", -1);
 
-        ApiService api = ApiClient.getClient().create(ApiService.class);
+        ApiService api = ApiClient.getClient(this).create(ApiService.class);
 
         String name = getIntent().getStringExtra("team_name");
         String imagePath = getIntent().getStringExtra("team_logo");
@@ -53,7 +53,7 @@ public class TeamDetailsActivity extends AppCompatActivity {
         //budget.setText("Budget: ₹ " + (team.getCurrentBudget() == null ? "0" : team.getCurrentBudget()));
 
 
-        String imageUrl = "http://192.168.0.101:5000/" + imagePath;
+        String imageUrl = "http://192.168.0.103:5000/" + imagePath;
 
         Log.d("IMAGE_DEBUG", "DETAIL IMAGE = " + imageUrl);
 

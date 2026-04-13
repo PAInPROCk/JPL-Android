@@ -34,7 +34,7 @@ public class PlayerDetailsActivity extends AppCompatActivity {
         playerRole.setText("Role: " + role);
         playerPrice.setText("₹ " + price);
 
-        String imageUrl = "http://192.168.0.101:5000/" + image;
+        String imageUrl = "http://192.168.0.103:5000/" + image;
 
         Glide.with(this)
                 .load(imageUrl)

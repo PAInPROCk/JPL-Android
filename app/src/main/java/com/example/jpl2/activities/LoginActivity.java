@@ -42,13 +42,19 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            viewModel.login(email, password);
+            viewModel.login(this,email, password);
         });
 
         // observing live data from the result
         viewModel.getLoginResult().observe(this, result -> {
 
             if (result != null && result.user != null) {
+
+                String token = result.token;
+                getSharedPreferences("APP_PREF", MODE_PRIVATE)
+                        .edit()
+                        .putString("TOKEN", token)
+                        .apply();
 
                 String role = result.user.role;
 

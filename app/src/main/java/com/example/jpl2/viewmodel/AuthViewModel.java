@@ -1,5 +1,7 @@
 package com.example.jpl2.viewmodel;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,7 +17,7 @@ public class AuthViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String email, String password){
-        repository.login(email, password, loginResult);
+    public void login(Context context,String email, String password){
+        repository.login(context,email, password, loginResult);
     }
 }

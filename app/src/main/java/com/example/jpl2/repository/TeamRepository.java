@@ -1,5 +1,6 @@
 package com.example.jpl2.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -18,9 +19,9 @@ import retrofit2.Response;
 
 public class TeamRepository {
 
-    public void getTeams(MutableLiveData<List<TeamResponse.Team>> liveData) {
+    public void getTeams(Context context,MutableLiveData<List<TeamResponse.Team>> liveData) {
 
-        ApiService api = ApiClient.getClient().create(ApiService.class);
+        ApiService api = ApiClient.getClient(context).create(ApiService.class);
 
         api.getTeams().enqueue(new Callback<TeamResponse>() {
             @Override
@@ -39,13 +40,17 @@ public class TeamRepository {
             }
         });
     }
-    public void addTeam(RequestBody teamName, RequestBody captain, RequestBody mobile, RequestBody email){
+    public void addTeam(
+            Context context,
+            RequestBody teamName,
+            RequestBody captain,
+            RequestBody mobile,
+            RequestBody email
+    ){
 
-        ApiService api = ApiClient.getClient().create(ApiService.class);
+        ApiService api = ApiClient.getClient(context).create(ApiService.class);
 
-        String cookie = "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsInRlYW1faWQiOm51bGwsIm5hbWUiOiJQcmF0aGFtZXNoIEFkbWluIiwidGVhbV9wdXJzZSI6MCwidGVhbV9sb2dvIjpudWxsLCJleHAiOjE3NzU4NDczNDh9.of4WEIIBTynuMKBsYxiCr-GtbQqiMNj4_k8PicFL9u8";
-
-        api.addTeam(cookie, teamName, captain, mobile, email)
+        api.addTeam(teamName, captain, mobile, email)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

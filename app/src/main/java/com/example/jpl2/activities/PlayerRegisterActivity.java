@@ -84,8 +84,17 @@ public class PlayerRegisterActivity extends AppCompatActivity {
             // TEMP: No image
             MultipartBody.Part imagePart = null;
 
-            viewModel.addPlayer(playerName, fatherName, surName,
-                    nickName, categoryBody, styleBody, basePrice, imagePart);
+            viewModel.addPlayer(
+                    this,   // ✅ ADD CONTEXT
+                    playerName,
+                    fatherName,
+                    surName,
+                    nickName,
+                    categoryBody,
+                    styleBody,
+                    basePrice,
+                    imagePart
+            );
 
             Toast.makeText(this, "Player Submitted", Toast.LENGTH_SHORT).show();
         });

@@ -30,7 +30,6 @@ public interface ApiService {
     @Multipart
     @POST("add-player")
     Call<ResponseBody> addPlayer(
-            @Header("Cookie") String cookie,
             @Part("playerName") RequestBody playerName,
             @Part("fatherName") RequestBody fatherName,
             @Part("surName") RequestBody surName,
@@ -49,7 +48,6 @@ public interface ApiService {
     @Multipart
     @POST("add-team")
     Call<ResponseBody> addTeam(
-            @Header("Cookie") String cookie,
             @Part("teamName") RequestBody teamName,
             @Part("captain") RequestBody captain,
             @Part("mobile") RequestBody mobile,

@@ -47,6 +47,6 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.loadPlayers();
+        viewModel.loadPlayers(this);
     }
 }

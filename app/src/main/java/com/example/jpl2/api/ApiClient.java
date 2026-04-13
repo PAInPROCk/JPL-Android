@@ -1,23 +1,42 @@
 package com.example.jpl2.api;
 
+import android.content.Context;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "http://192.168.0.101:5000/";
+    public static final String BASE_URL = "http://192.168.0.103:5000/";
 
-    private static Retrofit retrofit;
+    public static Retrofit getClient(Context context){
 
-    public static Retrofit getClient(){
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(chain -> {
 
-        if(retrofit == null){
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
+                    Request original = chain.request();
 
-        return retrofit;
+                    String token = context
+                            .getSharedPreferences("APP_PREF", Context.MODE_PRIVATE)
+                            .getString("TOKEN", "");
+
+                    Request.Builder builder = original.newBuilder();
+
+                    if(token != null && !token.isEmpty()){
+                        builder.addHeader("Authorization", "Bearer " + token);
+                    }
+
+                    return chain.proceed(builder.build());
+                })
+                .build();
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 }

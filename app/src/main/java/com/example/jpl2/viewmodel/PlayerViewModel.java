@@ -1,5 +1,7 @@
 package com.example.jpl2.viewmodel;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -20,11 +22,12 @@ public class PlayerViewModel extends ViewModel {
         return playerList;
     }
 
-    public  void loadPlayers(){
-        repository.getPlayers(playerList);
+    public  void loadPlayers(Context context){
+        repository.getPlayers(context,playerList);
     }
 
     public void addPlayer(
+            Context context,
             RequestBody playerName,
             RequestBody fatherName,
             RequestBody surName,
@@ -34,7 +37,7 @@ public class PlayerViewModel extends ViewModel {
             RequestBody basePrice,
             MultipartBody.Part image
     ){
-        repository.addPlayer(playerName, fatherName, surName,
+        repository.addPlayer(context, playerName, fatherName, surName,
                 nickName, category, style, basePrice, image);
     }
 }
