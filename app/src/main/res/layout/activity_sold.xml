@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="#121212"
     tools:context=".activities.sold_activity">
 
     <!-- PLAYER CARD -->
@@ -15,29 +16,47 @@
         android:id="@+id/playerCard"
         app:cardCornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/teamCard"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.3"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="8dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardElevation="6dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
+            android:background="#53584E"
             android:padding="16dp">
 
-            <ImageView
+            <FrameLayout
                 android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:id="@+id/playerImage"
-                android:src="@drawable/player"
-                android:background="@drawable/image_border"
-                android:padding="4dp"/>
+                android:layout_height="120dp">
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:id="@+id/playerImage"
+                    android:src="@drawable/player"
+                    android:background="@drawable/image_border"
+                    android:padding="4dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOLD"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:background="#ffeb3b"
+                    android:padding="4dp"
+                    android:layout_gravity="top|end"/>
+            </FrameLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/splayerName"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:text="Prathamesh Bhadwalkar"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -48,14 +67,78 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/sPlayerCate"
                 android:text="Category: B"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:textSize="20sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/sPlayerStyle"
                 android:text="Style: "
+                android:textSize="20sp"
                 android:textColor="#000"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sbasePrice"
+                android:textSize="20sp"
+                android:text="Base Price:"
+                android:textColor="#000"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Team Card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamCard"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerCard"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#53584E"
+            android:padding="16dp">
+            <ImageView
+                android:id="@+id/teamImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/player"
+                android:background="@drawable/image_border"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/teamName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JPL Warriors"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#00BCD4"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/teamId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Team Id: 1"
+                android:textColor="#000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/soldPrice"
+                android:text="₹50000"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
