@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.unsold_activity"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#4C8B47"
+    android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardElevation="8dp"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0D1B3D"
+            android:padding="16dp">
+
+            <!--- Player Image -->
+            <FrameLayout
+                android:id="@+id/imageContainer"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/playerImage"
+                    android:src="@drawable/player"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/circle_image_bg"
+                    android:padding="6dp"/>
+
+                <!-- UNSOLDTAG -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UNSOLD"
+                    android:textSize="18sp"
+                    android:textColor="#D32F2F"
+                    android:textStyle="bold"
+                    android:background="#FFFFF"
+                    android:padding="4dp"
+                    android:rotation="-20"
+                    android:layout_gravity="top|start"/>
+            </FrameLayout>
+
+            <!-- Player Name -->
+            <TextView
+                android:id="@+id/uplayerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Prathamesh Bhadwalkar"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@+id/imageContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageContainer"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="12dp"/>
+
+            <!-- Base Price -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ubasePrice"
+                android:text="Base Price: ₹5000"
+                android:textColor="#FFC107"
+                android:background="#1E2A5E"
+                android:padding="8dp"
+                app:layout_constraintStart_toEndOf="@+id/imageContainer"
+                app:layout_constraintTop_toBottomOf="@+id/uplayerName"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"/>
+
+            <!-- Status -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/status"
+                android:text="Status: UNSOLD"
+                android:layout_marginTop="10dp"
+                android:textColor="#F44336"
+                android:background="#1E2A5E"
+                android:padding="8dp"
+                app:layout_constraintStart_toEndOf="@+id/imageContainer"
+                app:layout_constraintTop_toBottomOf="@+id/ubasePrice"
+                android:layout_marginStart="16dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

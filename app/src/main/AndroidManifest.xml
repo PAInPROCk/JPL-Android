@@ -15,6 +15,9 @@
         android:theme="@style/Theme.JPL2"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.unsold_activity"
+            android:exported="false" />
+        <activity
             android:name=".activities.sold_activity"
             android:exported="false" />
         <activity
