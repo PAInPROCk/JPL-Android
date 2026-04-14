@@ -38,8 +38,8 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
 
             // Example: Auction button opens AuctionActivity
-//            auctionBtn.setOnClickListener(v ->
-//                    startActivity(new Intent(HomeActivity.this, AuctionActivity.class)));
+            auctionBtn.setOnClickListener(v ->
+                    startActivity(new Intent(HomeActivity.this, Team_Auction_Activity.class)));
 
             // Example: Teams button opens TeamsActivity
             teamsBtn.setOnClickListener(v ->
