@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="14dp"
-        tools:context=".activities.AdminAuctionActivity">
+        android:padding="12dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/playerCard"
@@ -21,6 +19,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,6 +69,7 @@
                             android:layout_marginTop="5dp"
                             android:padding="5dp"
                             android:textStyle="bold"
+                            android:textColor="#fff"
                             android:textSize="10sp"
                             android:background="@drawable/text_border_red"
                             android:text="Category: "/>
@@ -91,7 +91,8 @@
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:background="@drawable/text_border_red"
-                            android:text="Style: "/>
+                            android:text="Style: "
+                            android:textColor="#fff"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -104,6 +105,7 @@
                 </LinearLayout>
 
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -154,142 +156,152 @@
 
 
                 <!-- Current Price -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/container_border_cp"
-                android:layout_marginStart="20dp"
-                android:orientation="vertical">
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/currentPrice"
-                    android:text="Current Price"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:padding="10dp"/>
-                <TextView
-                    android:id="@+id/playerCurrentPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="₹5000"
-                    android:textColor="@color/black"
-                    android:layout_gravity="center"
-                    android:padding="12dp"/>
-            </LinearLayout>
+                    android:background="@drawable/container_border_cp"
+                    android:layout_marginStart="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/currentPrice"
+                        android:text="Current Price"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:padding="10dp"/>
+                    <TextView
+                        android:id="@+id/playerCurrentPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹5000"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:padding="12dp"/>
+                </LinearLayout>
 
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/playerTimer"
+
+        <LinearLayout
+            android:id="@+id/timer_teaminfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/playerPrice"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <LinearLayout
-                android:id="@+id/timerSection"
-                android:layout_width="match_parent"
+            <!-- TIMER CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_margin="15dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:padding="12dp">
+                android:layout_weight="1"
+                app:cardCornerRadius="12dp"
+                android:layout_marginEnd="6dp">
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/timerText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="02:00"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:gravity="center"
                     android:padding="16dp"
                     android:background="@drawable/timer_bg"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <Button
-                        android:layout_width="130dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/pause_bg"
-                        android:layout_marginStart="10dp"
-                        android:text="Pause"
-                        android:textSize="11sp"
-                        app:icon="@drawable/pause_ed"
-                        app:iconSize="30dp"/>
-                    <Button
-                        android:layout_width="130dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Resume"
-                        android:textSize="11sp"
-                        android:background="@drawable/pause_bg"
-                        android:backgroundTint="#ADABA7"
-                        app:icon="@drawable/play_ed"
-                        app:iconSize="30dp"/>
-                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+
+            <!-- TEAM INFO CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="12dp"
+                android:layout_marginStart="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="10dp">
+
+                    <!-- Team Logo -->
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/player"
+                        android:layout_marginBottom="6dp"/>
+
+                    <!-- Current Bid -->
+                    <TextView
+                        android:id="@+id/teamBidPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹10500"
+                        android:textColor="#F44336"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <!-- Purse -->
+                    <TextView
+                        android:id="@+id/teamPurse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹759500"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
         <androidx.cardview.widget.CardView
-            android:id="@+id/auctionControls"
+            android:id="@+id/teamBid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
-            app:layout_constraintTop_toBottomOf="@id/playerTimer"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/timer_teaminfo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="12dp">
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="14dp"
-                android:orientation="horizontal">
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
                 <Button
-                    android:id="@+id/sold"
+                    android:id="@+id/bidButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sold"
-                    android:layout_marginStart="23dp"
+                    android:text="500"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:padding="12dp"
                     android:textColor="@color/black"
-                    android:backgroundTint="#55FA58"/>
-
-                <Button
-                    android:id="@+id/cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cancel"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/black"
-                    android:layout_marginStart="10dp"/>
-
-                <Button
-                    android:id="@+id/nextPlayer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Next Player"
-                    android:textColor="@color/black"
-                    android:backgroundTint="#3E9EFF"
-                    android:layout_marginStart="10dp"/>
-
+                    android:backgroundTint="#4CAF50"/>
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:padding="14dp"
-            app:layout_constraintTop_toBottomOf="@id/auctionControls"
+            app:layout_constraintTop_toBottomOf="@id/teamBid"
             android:id="@+id/notificationRecycler"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
