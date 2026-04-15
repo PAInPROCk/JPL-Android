@@ -37,9 +37,9 @@ public class HomeActivity extends AppCompatActivity {
             loginBtn.setOnClickListener(v ->
                     startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
 
-            // Example: Auction button opens AuctionActivity
+            // Example: Auction button opens Waiting_activity which checks live auction and then redirect to auction page
             auctionBtn.setOnClickListener(v ->
-                    startActivity(new Intent(HomeActivity.this, Team_Auction_Activity.class)));
+                    startActivity(new Intent(HomeActivity.this, Waiting_Activity.class)));
 
             // Example: Teams button opens TeamsActivity
             teamsBtn.setOnClickListener(v ->

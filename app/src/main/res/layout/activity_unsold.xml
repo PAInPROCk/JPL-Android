@@ -46,7 +46,7 @@
                     android:textSize="18sp"
                     android:textColor="#D32F2F"
                     android:textStyle="bold"
-                    android:background="#FFFFF"
+                    android:background="#FFFFFF"
                     android:padding="4dp"
                     android:rotation="-20"
                     android:layout_gravity="top|start"/>
