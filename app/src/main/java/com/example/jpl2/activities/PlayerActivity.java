@@ -28,11 +28,11 @@ public class PlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.playerRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
 // ✅ CREATE EMPTY ADAPTER FIRST
-        playerAdapter = new PlayerAdapter(new ArrayList<>());
+        playerAdapter = new PlayerAdapter(this, new ArrayList<>());
         recyclerView.setAdapter(playerAdapter);
 
 // ViewModel
@@ -40,7 +40,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         viewModel.getPlayers().observe(this, players -> {
             if(players != null && !players.isEmpty()){
-                playerAdapter = new PlayerAdapter(players); // or update list
+                playerAdapter = new PlayerAdapter(this, players); // or update list
                 recyclerView.setAdapter(playerAdapter);
             } else {
                 Log.d("PLAYER_DEBUG", "No players received");

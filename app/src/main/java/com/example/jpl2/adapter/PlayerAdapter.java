@@ -2,6 +2,7 @@ package com.example.jpl2.adapter;
 
 import static com.example.jpl2.api.ApiClient.BASE_URL;
 
+import android.content.Context;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.jpl2.R;
+import com.example.jpl2.api.ApiClient;
 import com.example.jpl2.model.Player;
 
 
@@ -19,9 +21,11 @@ import java.util.List;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder> {
     private List<Player> players;
+    Context context;
 
-    public PlayerAdapter(List<Player> players){
+    public PlayerAdapter(Context context,List<Player> players) {
         this.players = players;
+        this.context = context;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -32,15 +36,15 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
             super(view);
             image = view.findViewById(R.id.playerImage);
             name = view.findViewById(R.id.playerName);
-            price = view.findViewById(R.id.playerPrice);
-            role = view.findViewById(R.id.playerRole);
+//            price = view.findViewById(R.id.playerPrice);
+//            role = view.findViewById(R.id.playerRole);
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_player, parent, false);
+                .inflate(R.layout.item_players, parent, false);
         return new ViewHolder(view);
     }
 
@@ -48,16 +52,18 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position){
         Player player = players.get(position);
 
-        holder.name.setText(player.getName());
-        holder.price.setText("₹ " + player.getBasePrice());
-        holder.role.setText(player.getRole());
+        holder.name.setText(player.getName() != null ? player.getName() : "N/A");
+//        holder.price.setText("₹ " + player.getBasePrice());
+//        holder.role.setText(player.getRole() != null ? player.getRole() : "N/A");
 
 // IMAGE LOAD
-        String imageUrl = BASE_URL + player.getImagePath();
+        String imageUrl = player.getImagePath() != null ? ApiClient.BASE_URL + player.getImagePath() : null;
 
-        Glide.with(holder.itemView.getContext())
+        Glide.with(context)
                 .load(imageUrl)
                 .placeholder(R.drawable.player)
+                .error(R.drawable.player)
+                .circleCrop()
                 .into(holder.image);
 
 // CLICK → DETAILS
