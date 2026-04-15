@@ -1,5 +1,7 @@
 package com.example.jpl2.activities;
 
+import static com.example.jpl2.api.ApiClient.BASE_URL;
+
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,7 +55,7 @@ public class TeamDetailsActivity extends AppCompatActivity {
         //budget.setText("Budget: ₹ " + (team.getCurrentBudget() == null ? "0" : team.getCurrentBudget()));
 
 
-        String imageUrl = "http://192.168.0.103:5000/" + imagePath;
+        String imageUrl = BASE_URL + imagePath;
 
         Log.d("IMAGE_DEBUG", "DETAIL IMAGE = " + imageUrl);
 

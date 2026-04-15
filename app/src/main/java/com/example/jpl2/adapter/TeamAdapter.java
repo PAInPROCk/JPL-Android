@@ -1,5 +1,7 @@
 package com.example.jpl2.adapter;
 
+import static com.example.jpl2.api.ApiClient.BASE_URL;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +49,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 
         Log.d("IMAGE_DEBUG", "Logo: " + team.getImagePath());
 
-        String imageurl = "http://192.168.0.103:5000/" + team.getImagePath();
+        String imageurl = BASE_URL + team.getImagePath();
 
         Glide.with(holder.itemView.getContext())
                 .load(imageurl)

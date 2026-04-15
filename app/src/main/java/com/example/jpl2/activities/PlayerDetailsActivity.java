@@ -1,5 +1,7 @@
 package com.example.jpl2.activities;
 
+import static com.example.jpl2.api.ApiClient.BASE_URL;
+
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +36,7 @@ public class PlayerDetailsActivity extends AppCompatActivity {
         playerRole.setText("Role: " + role);
         playerPrice.setText("₹ " + price);
 
-        String imageUrl = "http://192.168.0.103:5000/" + image;
+        String imageUrl = BASE_URL + image;
 
         Glide.with(this)
                 .load(imageUrl)
