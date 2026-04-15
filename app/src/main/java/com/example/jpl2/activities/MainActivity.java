@@ -2,6 +2,8 @@ package com.example.jpl2.activities;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+import static com.example.jpl2.api.ApiClient.BASE_URL;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.WebSettings;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
             webView.setWebViewClient(new WebViewClient());
 
-            webView.loadUrl("http://192.168.0.103:3000");
+            webView.loadUrl(BASE_URL);
         }catch (Exception e){
             Toast.makeText(MainActivity.this, e.toString(), LENGTH_LONG).show();
         }

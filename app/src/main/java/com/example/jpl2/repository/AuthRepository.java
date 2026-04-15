@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.jpl2.api.ApiClient;
+import com.example.jpl2.model.AuthCheckResponse;
 import com.example.jpl2.model.LoginRequest;
 import com.example.jpl2.model.LoginResponse;
 import com.example.jpl2.network.ApiService;
@@ -49,4 +50,26 @@ public class AuthRepository {
             }
         });
     }
+    public void checkAuth(Context context, MutableLiveData<AuthCheckResponse> liveData){
+        ApiService api = ApiClient.getClient(context).create(ApiService.class);
+
+        api.checkAuth().enqueue(new Callback<AuthCheckResponse>() {
+            @Override
+            public void onResponse(Call<AuthCheckResponse> call, Response<AuthCheckResponse> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    liveData.setValue(response.body());
+                } else {
+                    AuthCheckResponse res = new AuthCheckResponse();
+                    res.authenticated = false;
+                    liveData.setValue(res);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthCheckResponse> call, Throwable t) {
+                liveData.setValue(null);
+            }
+        });
+    }
+
 }

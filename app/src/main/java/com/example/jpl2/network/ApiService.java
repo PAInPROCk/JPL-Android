@@ -1,5 +1,6 @@
 package com.example.jpl2.network;
 
+import com.example.jpl2.model.AuthCheckResponse;
 import com.example.jpl2.model.LoginRequest;
 import com.example.jpl2.model.LoginResponse;
 import com.example.jpl2.model.PlayerResponse;
@@ -53,5 +54,8 @@ public interface ApiService {
             @Part("mobile") RequestBody mobile,
             @Part("email") RequestBody email
     );
+
+    @GET("check-auth")
+    Call<AuthCheckResponse> checkAuth();
 
 }
