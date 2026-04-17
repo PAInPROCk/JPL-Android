@@ -1,7 +1,5 @@
 package com.example.jpl2.network;
 
-import com.example.jpl2.model.AuctionStatusResponse;
-import com.example.jpl2.model.AuthCheckResponse;
 import com.example.jpl2.model.LoginRequest;
 import com.example.jpl2.model.LoginResponse;
 import com.example.jpl2.model.PlayerResponse;
@@ -44,12 +42,9 @@ public interface ApiService {
     @GET("teams")
     Call<TeamResponse> getTeams();
 
+
     @GET("team/{id}")
     Call<TeamResponse.Team> getTeamById(@Path("id") int id);
-
-    @GET("/auction-status")
-    Call<AuctionStatusResponse>
-    getAuctionStatus();
 
     @Multipart
     @POST("add-team")
@@ -60,7 +55,8 @@ public interface ApiService {
             @Part("email") RequestBody email
     );
 
-    @GET("check-auth")
-    Call<AuthCheckResponse> checkAuth();
+    @Multipart
+    @POST("upload-batch")
+    Call<ResponseBody> uploadBatch(@Part MultipartBody.Part file);
 
 }

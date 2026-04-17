@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="orange_header">#F97316</color>
+    <color name="green_header">#22C55E</color>
+    <color name="card_bg">#F3F4F6</color>
+    <color name="overlay_bg">#66000000</color>
+    <color name="text_dark">#111827</color>
+    <color name="light_blue_bg">#E3F2FD</color>
+    <color name="dark_blue_bg">#0F172A</color>
+    <color name="container_bg">#CC1E293B</color>
 </resources>

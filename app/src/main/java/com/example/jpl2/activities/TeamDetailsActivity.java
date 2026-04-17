@@ -27,17 +27,17 @@ import com.example.jpl2.R;
 public class TeamDetailsActivity extends AppCompatActivity {
 
     ImageView teamLogo;
-    TextView teamName, captain, budget;
+    TextView teamName, teamCaptain, budget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_details);
 
-        teamLogo = findViewById(R.id.teamLogo);
+        teamLogo = findViewById(R.id.teamImage);
         teamName = findViewById(R.id.teamName);
-        captain = findViewById(R.id.captain);
-        budget = findViewById(R.id.budget);
+        teamCaptain = findViewById(R.id.teamCaptain);
+        budget = findViewById(R.id.teamBudget);
 
         int teamId = getIntent().getIntExtra("team_id", -1);
 
@@ -45,9 +45,10 @@ public class TeamDetailsActivity extends AppCompatActivity {
 
         String name = getIntent().getStringExtra("team_name");
         String imagePath = getIntent().getStringExtra("team_logo");
+        String captain = getIntent().getStringExtra("captain");
 
         teamName.setText(name);
-        captain.setText("Captain: N/A");
+        teamCaptain.setText(captain);
         budget.setText("Budget: ₹ 0");
 
         //teamName.setText(team.getName());
@@ -61,8 +62,8 @@ public class TeamDetailsActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.teams)
+                .error(R.drawable.teams)
                 .into(teamLogo);
     }
 }

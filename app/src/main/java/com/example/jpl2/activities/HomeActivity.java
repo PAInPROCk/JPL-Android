@@ -48,8 +48,8 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(new Intent(HomeActivity.this, TeamsActivity.class)));
 
             // Example: Players button opens PlayersActivity
-            playersBtn.setOnClickListener(v ->
-                    startActivity(new Intent(HomeActivity.this, PlayerActivity.class)));
+//            playersBtn.setOnClickListener(v ->
+//                    startActivity(new Intent(HomeActivity.this, PlayerActivity.class)));
 
             // Example: Registration button opens RegistrationActivity
             registrationBtn.setOnClickListener(v ->

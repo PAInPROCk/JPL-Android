@@ -13,6 +13,8 @@ import com.example.jpl2.R;
 import com.example.jpl2.viewmodel.TeamViewModel;
 import com.example.jpl2.adapter.TeamAdapter;
 
+import java.util.ArrayList;
+
 public class TeamsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -34,14 +36,13 @@ public class TeamsActivity extends AppCompatActivity {
         viewModel.fetchTeams(this);
 
         viewModel.getTeams().observe(this, teams -> {
-            if (teams != null) {
-                Toast.makeText(this, "Teams loaded: " + teams.size(), Toast.LENGTH_SHORT).show();
+            if (teams != null && !teams.isEmpty()) {
+
                 adapter = new TeamAdapter(this, teams);
-                recyclerView.setPadding(40, 0, 40, 0);
-                recyclerView.setClipToPadding(false);
                 recyclerView.setAdapter(adapter);
+
             } else {
-                Toast.makeText(this, "Failed to load teams", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No teams found", Toast.LENGTH_SHORT).show();
             }
         });
     }

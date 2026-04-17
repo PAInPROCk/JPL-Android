@@ -1,57 +1,207 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0D0D1A">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="#0D0B1A">
-
+        android:backgroundTint="#AA1E2A44">
         <ImageView
-            android:id="@+id/teamLogo"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/maintheme"
             android:scaleType="centerCrop"/>
 
-        <TextView
-            android:id="@+id/teamName"
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/teamLogo"
-            android:layout_centerHorizontal="true"
-            android:text="Team Name"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="16dp"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:background="#A77FFE">
 
-        <TextView
-            android:id="@+id/captain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/teamName"
-            android:layout_centerHorizontal="true"
-            android:text="Captain: N/A"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <TextView
-            android:id="@+id/budget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/captain"
-            android:layout_centerHorizontal="true"
-            android:text="Budget"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="10dp"/>
+                <!-- TEAM LOGO -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/teamImage"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/teams" />
 
-    </LinearLayout>
+                <!-- TEAM NAME CARD -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/card_bg"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/orange_header"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="Team Name"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/teamName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="JPL Strikers" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <!-- ROW: CAPTAIN + RANK -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <!-- Captain -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp">
+
+                        <TextView
+                            android:id="@+id/teamCaptain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_header"
+                            android:gravity="center"
+                            android:padding="12dp"
+                            android:text="Captain"
+                            android:textColor="@android:color/white" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Rank -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_header"
+                            android:gravity="center"
+                            android:padding="12dp"
+                            android:text="Team Rank"
+                            android:textColor="@android:color/white" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <!-- ROW: BUDGETS -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_header"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="Total Budget"
+                            android:textColor="@android:color/white" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp">
+
+                        <TextView
+                            android:id="@+id/teamBudget"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_header"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="Current Budget"
+                            android:textColor="@android:color/white" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <!-- PLAYERS SECTION -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Players Bought (0/8)"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/card_bg"
+                            android:paddingTop="6dp"
+                            android:text="No players yet" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </ScrollView>
