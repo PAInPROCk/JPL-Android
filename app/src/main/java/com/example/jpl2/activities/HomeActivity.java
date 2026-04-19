@@ -2,6 +2,7 @@ package com.example.jpl2.activities;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.example.jpl2.viewmodel.AuthViewModel;
 public class HomeActivity extends AppCompatActivity {
 
     private View btnTeams, btnPlayers, btnAuction, btnRegistration, btnAdmin, btnLogin;
+
+    AuthViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,7 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(this, e.toString(), LENGTH_LONG).show();
         }
     }
+
 
     // -----------------------------
     // Reusable setup for normal cards

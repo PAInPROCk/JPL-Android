@@ -29,6 +29,7 @@ public class AuthViewModel extends ViewModel {
     }
 
     public void checkAuth(Context context){
+        authResult.setValue(null); // ✅ RESET OLD DATA
         repository.checkAuth(context, authResult);
     }
 

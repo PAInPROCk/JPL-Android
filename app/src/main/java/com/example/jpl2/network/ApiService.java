@@ -61,9 +61,10 @@ public interface ApiService {
     @POST("upload-batch")
     Call<ResponseBody> uploadBatch(@Part MultipartBody.Part file);
 
-    @POST("auction-status")
+    @GET("auction-status")
     Call<AuctionStatusResponse> getAuctionStatus();
 
-    @POST("check-auth")
+    @GET("check-auth")
     Call<AuthCheckResponse> checkAuth();
+
 }

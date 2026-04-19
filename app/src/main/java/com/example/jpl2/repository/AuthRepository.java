@@ -67,7 +67,9 @@ public class AuthRepository {
 
             @Override
             public void onFailure(Call<AuthCheckResponse> call, Throwable t) {
-                liveData.setValue(null);
+                AuthCheckResponse res = new AuthCheckResponse();
+                res.authenticated = false;
+                liveData.setValue(res);
             }
         });
     }
