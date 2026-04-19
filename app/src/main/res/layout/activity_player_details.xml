@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="18dp"
+            android:layout_marginTop="30dp"
             app:cardElevation="8dp"
             android:backgroundTint="#AA1E2A44">
             <LinearLayout
@@ -23,8 +24,8 @@
                 android:padding="18dp">
                 <!-- Image -->
                 <ImageView
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:id="@+id/playerImage"
                     android:layout_gravity="center"
                     android:src="@drawable/player"
@@ -211,6 +212,138 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/playerBasePrice"
                                 android:text="₹5000"
+                                android:gravity="center"
+                                android:padding="10dp"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!--Total Runs -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        app:cardCornerRadius="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Total Runs"
+                                android:textColor="#fff"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:background="#D0800B"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/playerTotalRuns"
+                                android:text="--"
+                                android:gravity="center"
+                                android:padding="10dp"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Highest Runs -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        app:cardCornerRadius="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Highest Runs"
+                                android:textColor="#fff"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:background="#D0800B"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/playerHighestRuns"
+                                android:text="--"
+                                android:gravity="center"
+                                android:padding="10dp"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Wickets Taken -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        app:cardCornerRadius="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Wickets Taken"
+                                android:textColor="#fff"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:background="#D0800B"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/playerWicketsTaken"
+                                android:text="--"
+                                android:gravity="center"
+                                android:padding="10dp"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Out -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        app:cardCornerRadius="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Out"
+                                android:textColor="#fff"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:background="#D0800B"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/playerOut"
+                                android:text="--"
                                 android:gravity="center"
                                 android:padding="10dp"/>
                         </LinearLayout>

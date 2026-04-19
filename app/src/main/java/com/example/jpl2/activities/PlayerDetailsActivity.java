@@ -15,7 +15,7 @@ import com.example.jpl2.R;
 public class PlayerDetailsActivity extends AppCompatActivity {
 
     ImageView playerImage;
-    TextView playerName, playerRole, playerPrice, playerNickName, playerStyle, playerAge, playerGender, playerTeam, playerCategory;
+    TextView playerName, playerRole, playerPrice, playerNickName, playerStyle, playerAge, playerGender, playerTeam, playerCategory, playerTotalRuns, playerHighestRuns, playerWicketsTaken, playerOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +35,21 @@ public class PlayerDetailsActivity extends AppCompatActivity {
         playerPrice = findViewById(R.id.playerBasePrice);
         playerGender = findViewById(R.id.playerGender);
         playerTeam = findViewById(R.id.playerTeams);
+        playerTotalRuns = findViewById(R.id.playerTotalRuns);
+        playerHighestRuns = findViewById(R.id.playerHighestRuns);
+        playerWicketsTaken = findViewById(R.id.playerWicketsTaken);
+        playerOut = findViewById(R.id.playerOut);
 
         // GET DATA FROM INTENT
         String name = getIntent().getStringExtra("name");
         String nickName = getIntent().getStringExtra("nickname");
         String category = getIntent().getStringExtra("category");
-        String style = getIntent().getStringExtra("style");
+        String type = getIntent().getStringExtra("type");
         String role = getIntent().getStringExtra("role");
+        int totalRuns = getIntent().getIntExtra("total_runs", 0);
+        int highestRuns = getIntent().getIntExtra("highest_runs", 0);
+        int wicketsTaken = getIntent().getIntExtra("wickets_taken", 0);
+        int out = getIntent().getIntExtra("times_out", 0);
         int age = getIntent().getIntExtra("age", 0);
         int price = getIntent().getIntExtra("price", 0);
         String gender = getIntent().getStringExtra("gender");
@@ -51,18 +59,30 @@ public class PlayerDetailsActivity extends AppCompatActivity {
         playerName.setText(name);
         playerNickName.setText(nickName);
         playerCategory.setText(category);
-        playerStyle.setText(style);
-        playerRole.setText(role);
+        playerStyle.setText(type);
         playerAge.setText(String.valueOf(age));
         playerGender.setText(gender);
         playerTeam.setText(TextUtils.isEmpty(teams) ? "No teams recorded" : teams);
-        playerRole.setText("Role: " + role);
+        playerRole.setText(role);
         playerPrice.setText("₹ " + price);
+        playerOut.setText(String.valueOf(out));
+        playerWicketsTaken.setText(String.valueOf(wicketsTaken));
+        playerTotalRuns.setText(String.valueOf(totalRuns));
+        playerHighestRuns.setText(String.valueOf(highestRuns));
 
-        String imageUrl = BASE_URL + image;
+        String imageUrl;
+
+        if(image != null && !image.isEmpty()){
+            imageUrl = BASE_URL + image;
+        }else {
+            imageUrl = null;
+        }
 
         Glide.with(this)
                 .load(imageUrl)
+                .placeholder(R.drawable.player)
+                .error(R.drawable.player)
+                .circleCrop()
                 .into(playerImage);
     }
 }

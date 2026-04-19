@@ -28,7 +28,7 @@ public class PlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-        recyclerView = findViewById(R.id.playerRecyclerView);
+        recyclerView = findViewById(R.id.playersRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
 // ✅ CREATE EMPTY ADAPTER FIRST
@@ -50,3 +50,5 @@ public class PlayerActivity extends AppCompatActivity {
         viewModel.loadPlayers(this);
     }
 }
+
+

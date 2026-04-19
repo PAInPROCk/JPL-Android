@@ -68,11 +68,25 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
 // CLICK → DETAILS
         holder.itemView.setOnClickListener(v -> {
+
             Intent intent = new Intent(v.getContext(), PlayerDetailsActivity.class);
+
             intent.putExtra("name", player.getName());
-            intent.putExtra("image", player.getImagePath());
-            intent.putExtra("price", player.getBasePrice());
+            intent.putExtra("nickname", player.getNickName());
+            intent.putExtra("category", player.getCategory());
+            intent.putExtra("type", player.getType());
             intent.putExtra("role", player.getRole());
+            intent.putExtra("age", player.getAge());
+            intent.putExtra("price", player.getBasePrice());
+            intent.putExtra("gender", player.getGender());
+            intent.putExtra("teams", player.getTeamsPlayed());
+            intent.putExtra("image", player.getImagePath());
+
+            intent.putExtra("total_runs", player.getTotalRuns());
+            intent.putExtra("highest_runs", player.getHighestRuns());
+            intent.putExtra("wickets_taken", player.getWicketsTaken());
+            intent.putExtra("times_out", player.getTimesOut());
+
             v.getContext().startActivity(intent);
         });
     }

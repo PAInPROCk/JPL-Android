@@ -8,25 +8,23 @@ public class TeamResponse {
     public List<Team> teams;
 
     public static class Team {
+
         public int team_id;
         public String name;
         public String captain;
-        public String trank;
+        public String rank;
         public String total_budget;
         public String current_budget;
         public String players_bought;
         public String image_path;
 
-        public String getName() { return name; }
-        public String getImagePath() { return image_path; }
         public int getTeamId() { return team_id; }
-
-        public String getCaptain(){
-            return captain;
-        }
-
-        public String getTotal_budget(){
-            return total_budget;
-        }
+        public String getName() { return name; }
+        public String getCaptain() { return captain; }
+        public String getRank() { return rank; }
+        public String getTotalBudget() { return total_budget; }
+        public String getCurrentBudget() { return current_budget; }
+        public String getPlayersBought() { return players_bought; }
+        public String getImagePath() { return image_path; }
     }
 }

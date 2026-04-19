@@ -18,13 +18,15 @@
 
     public class Waiting_Activity extends AppCompatActivity {
 
-        Handler handler = new Handler(getMainLooper());
+        Handler handler;
         Runnable checkAuctionStatus;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             EdgeToEdge.enable(this);
             setContentView(R.layout.activity_waiting);
+
+            handler = new Handler(getMainLooper());
             checkAuctionStatus = new Runnable() {
                 @Override
                 public void run() {

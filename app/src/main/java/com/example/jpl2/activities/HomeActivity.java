@@ -4,7 +4,9 @@ import static android.widget.Toast.LENGTH_LONG;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +17,7 @@ import com.example.jpl2.viewmodel.AuthViewModel;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button teamsBtn, playersBtn, auctionBtn, registrationBtn, adminBtn, loginBtn;
+    private View btnTeams, btnPlayers, btnAuction, btnRegistration, btnAdmin, btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,62 +28,114 @@ public class HomeActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        // Match IDs with your XML
-        teamsBtn = findViewById(R.id.btn_teams);
-        playersBtn = findViewById(R.id.btn_players);
-        auctionBtn = findViewById(R.id.btn_auction);
-        registrationBtn = findViewById(R.id.btn_registration);
-        adminBtn = findViewById(R.id.btn_admin);
-        loginBtn = findViewById(R.id.btn_login);
+        // Find cards
+        btnTeams = findViewById(R.id.btn_teams);
+        btnPlayers = findViewById(R.id.btn_players);
+        btnAuction = findViewById(R.id.btn_auction);
+        btnRegistration = findViewById(R.id.btn_registration);
+        btnAdmin = findViewById(R.id.btn_admin);
+        btnLogin = findViewById(R.id.btn_login);
 
         try {
-            // Example: Login button opens LoginActivity
-            loginBtn.setOnClickListener(v ->
-                    startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
 
-            // Example: Auction button opens Waiting_activity which checks live auction and then redirect to auction page
-            auctionBtn.setOnClickListener(v ->
-                    startActivity(new Intent(HomeActivity.this, Waiting_Activity.class)));
+            // Normal cards
+            setupCard(
+                    btnTeams,
+                    R.drawable.teamsicon,
+                    "Teams",
+                    TeamsActivity.class
+            );
 
-            // Example: Teams button opens TeamsActivity
-            teamsBtn.setOnClickListener(v ->
-                    startActivity(new Intent(HomeActivity.this, TeamsActivity.class)));
+            setupCard(
+                    btnPlayers,
+                    R.drawable.player,
+                    "Players",
+                    PlayerActivity.class
+            );
 
-            // Example: Players button opens PlayersActivity
-//            playersBtn.setOnClickListener(v ->
-//                    startActivity(new Intent(HomeActivity.this, PlayerActivity.class)));
+            setupCard(
+                    btnAuction,
+                    R.drawable.auctionicon,
+                    "Auction",
+                    Waiting_Activity.class
+            );
 
-            // Example: Registration button opens RegistrationActivity
-            registrationBtn.setOnClickListener(v ->
-                    startActivity(new Intent(HomeActivity.this, RegistrationActivity.class)));
+            setupCard(
+                    btnRegistration,
+                    R.drawable.registrationicon,
+                    "Register",
+                    RegistrationActivity.class
+            );
 
-            // Example: Admin button opens AdminActivity
-            AuthViewModel viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+            setupCard(
+                    btnLogin,
+                    R.drawable.loginicon,
+                    "Login",
+                    LoginActivity.class
+            );
 
-// ✅ OBSERVER (OUTSIDE CLICK)
-            viewModel.getAuthResult().observe(this, result -> {
-
-                if(result == null || !result.authenticated || result.user == null){
-                    Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String role = result.user.role;
-
-                if(role.equals("admin")){
-                    startActivity(new Intent(HomeActivity.this, AdminActivity.class));
-                } else {
-                    Toast.makeText(this, "Access Denied: Not Admin", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-// ✅ BUTTON CLICK (ONLY API CALL)
-            adminBtn.setOnClickListener(v -> {
-                viewModel.checkAuth(this);
-            });
+            // Admin special logic
+            setupAdminCard();
 
         } catch (Exception e) {
-            Toast.makeText(HomeActivity.this, e.toString(), LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), LENGTH_LONG).show();
         }
+    }
+
+    // -----------------------------
+    // Reusable setup for normal cards
+    // -----------------------------
+    private void setupCard(View card, int iconRes, String title, Class<?> targetActivity) {
+
+        ImageView icon = card.findViewById(R.id.icon);
+        TextView text = card.findViewById(R.id.title);
+
+        icon.setImageResource(iconRes);
+        text.setText(title);
+
+        card.setOnClickListener(v ->
+                startActivity(new Intent(HomeActivity.this, targetActivity))
+        );
+    }
+
+    // -----------------------------
+    // Admin card with auth check
+    // -----------------------------
+    private void setupAdminCard() {
+
+        ImageView icon = btnAdmin.findViewById(R.id.icon);
+        TextView text = btnAdmin.findViewById(R.id.title);
+
+        icon.setImageResource(R.drawable.adminicon);
+        text.setText("Admin");
+
+        AuthViewModel viewModel =
+                new ViewModelProvider(this).get(AuthViewModel.class);
+
+        // Observe auth result
+        viewModel.getAuthResult().observe(this, result -> {
+
+            if (result == null || !result.authenticated || result.user == null) {
+                Toast.makeText(this,
+                        "Please login first",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if ("admin".equals(result.user.role)) {
+                startActivity(
+                        new Intent(HomeActivity.this, AdminActivity.class)
+                );
+            } else {
+                Toast.makeText(this,
+                        "Access Denied: Not Admin",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Click = check auth
+        btnAdmin.setOnClickListener(v ->
+                viewModel.checkAuth(this)
+        );
     }
 }

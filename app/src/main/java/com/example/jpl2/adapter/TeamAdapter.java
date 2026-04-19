@@ -65,12 +65,17 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 
         // ✅ Click → open Team Details
         holder.itemView.setOnClickListener(v -> {
+
             Intent intent = new Intent(context, TeamDetailsActivity.class);
 
             intent.putExtra("team_id", team.getTeamId());
-            intent.putExtra("team_name", name);
-            intent.putExtra("team_logo", imagePath);
-            intent.putExtra("team_captain", captain);
+            intent.putExtra("team_name", team.getName());
+            intent.putExtra("team_logo", team.getImagePath());
+            intent.putExtra("captain", team.getCaptain());
+            intent.putExtra("rank", team.getRank());
+            intent.putExtra("total_budget", team.getTotalBudget());
+            intent.putExtra("current_budget", team.getCurrentBudget());
+            intent.putExtra("players_bought", team.getPlayersBought());
 
             context.startActivity(intent);
         });
