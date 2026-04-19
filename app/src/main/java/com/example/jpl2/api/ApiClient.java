@@ -7,40 +7,49 @@ import okhttp3.Request;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 import java.util.concurrent.TimeUnit;
 
 public class ApiClient {
 
     public static final String BASE_URL = "https://jpl-backend-6ecq.onrender.com/";
 
+    private static Retrofit retrofit = null;
+
     public static Retrofit getClient(Context context){
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(chain -> {
+        if(retrofit == null){
 
-                    Request original = chain.request();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .addInterceptor(chain -> {
 
-                    String token = context
-                            .getSharedPreferences("APP_PREF", Context.MODE_PRIVATE)
-                            .getString("TOKEN", "");
+                        Request original = chain.request();
 
-                    Request.Builder builder = original.newBuilder();
+                        String token = context
+                                .getApplicationContext() // 🔥 IMPORTANT FIX
+                                .getSharedPreferences("APP_PREF", Context.MODE_PRIVATE)
+                                .getString("TOKEN", "");
 
-                    if(token != null && !token.isEmpty()){
-                        builder.addHeader("Authorization", "Bearer " + token);
-                    }
+                        Request.Builder builder = original.newBuilder();
 
-                    return chain.proceed(builder.build());
-                })
-                .build();
+                        if(token != null && !token.isEmpty()){
+                            builder.addHeader("Authorization", "Bearer " + token);
+                        }
 
-        return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+                        return chain.proceed(builder.build());
+                    })
+                    .build();
+
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        return retrofit;
     }
 }

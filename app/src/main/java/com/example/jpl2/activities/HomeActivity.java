@@ -2,6 +2,7 @@ package com.example.jpl2.activities;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import com.example.jpl2.viewmodel.AuthViewModel;
 public class HomeActivity extends AppCompatActivity {
 
     Button teamsBtn, playersBtn, auctionBtn, registrationBtn, adminBtn, loginBtn;
+
+    AuthViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,9 @@ public class HomeActivity extends AppCompatActivity {
             loginBtn.setOnClickListener(v ->
                     startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
 
-            // Example: Auction button opens Waiting_activity which checks live auction and then redirect to auction page
-            auctionBtn.setOnClickListener(v ->
-                    startActivity(new Intent(HomeActivity.this, Waiting_Activity.class)));
+            auctionBtn.setOnClickListener(v -> {
+                checkAccessAndNavigate("team", Waiting_Activity.class);
+            });
 
             // Example: Teams button opens TeamsActivity
             teamsBtn.setOnClickListener(v ->
@@ -56,32 +59,41 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(new Intent(HomeActivity.this, RegistrationActivity.class)));
 
             // Example: Admin button opens AdminActivity
-            AuthViewModel viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+            viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
-// ✅ OBSERVER (OUTSIDE CLICK)
-            viewModel.getAuthResult().observe(this, result -> {
-
-                if(result == null || !result.authenticated || result.user == null){
-                    Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String role = result.user.role;
-
-                if(role.equals("admin")){
-                    startActivity(new Intent(HomeActivity.this, AdminActivity.class));
-                } else {
-                    Toast.makeText(this, "Access Denied: Not Admin", Toast.LENGTH_SHORT).show();
-                }
-            });
 
 // ✅ BUTTON CLICK (ONLY API CALL)
             adminBtn.setOnClickListener(v -> {
-                viewModel.checkAuth(this);
+                checkAccessAndNavigate("admin", AdminActivity.class);
             });
 
         } catch (Exception e) {
             Toast.makeText(HomeActivity.this, e.toString(), LENGTH_LONG).show();
         }
+    }
+
+    private void checkAccessAndNavigate(String requiredRole, Class<?> destination){
+
+        AuthViewModel viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+
+        viewModel.getAuthResult().removeObservers(this);
+
+        viewModel.checkAuth(this);
+
+        viewModel.getAuthResult().observe(this, result -> {
+
+            if(result == null) return; // ✅ ignore reset
+
+            if(!result.authenticated || result.user == null){
+                Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(result.user.role.equals(requiredRole)){
+                startActivity(new Intent(HomeActivity.this, destination));
+            } else {
+                Toast.makeText(this, "Access Denied", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
