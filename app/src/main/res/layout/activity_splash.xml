@@ -1,16 +1,65 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4D5EFF">
+    android:background="#0B1020">
 
-    <TextView
-        android:id="@+id/logo_title"
+    <!-- Center Logo/Icon -->
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/logo_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Auction"
-        android:textSize="90sp"
-        android:textStyle="italic"
-        android:textColor="@color/white"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp">
+        <ImageView
+            android:id="@+id/logoIcon"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_auctra_logo"
+            android:scaleType="fitCenter" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- App Name -->
+    <TextView
+        android:id="@+id/logoTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo_card"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="AUCTRA"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="34sp"
+        android:letterSpacing="0.08" />
+
+    <!-- Tagline -->
+    <TextView
+        android:id="@+id/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Smart Real-Time Auction Platform"
+        android:textColor="#B0BEC5"
+        android:textSize="14sp" />
+
+    <!-- Bottom Credit -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Powered by Auctra"
+        android:textColor="#607D8B"
+        android:textSize="12sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp" />
+
 </RelativeLayout>
