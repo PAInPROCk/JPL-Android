@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.jpl2.R;
@@ -22,7 +24,7 @@ public class Waiting_Activity extends AppCompatActivity {
     private Handler handler;
     private Runnable checkAuctionStatus;
 
-    private final int POLL_DELAY = 3000; // 3 sec
+    private static final int POLL_DELAY = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,29 +42,32 @@ public class Waiting_Activity extends AppCompatActivity {
                 handler.postDelayed(this, POLL_DELAY);
             }
         };
+
+        getOnBackPressedDispatcher().addCallback(this,
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        handler.removeCallbacks(checkAuctionStatus);
+                        finish();
+                    }
+                });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        // Start polling only when page visible
         handler.post(checkAuctionStatus);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        // Stop polling when user leaves page
         handler.removeCallbacks(checkAuctionStatus);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // Cleanup
         handler.removeCallbacks(checkAuctionStatus);
     }
 
@@ -72,10 +77,12 @@ public class Waiting_Activity extends AppCompatActivity {
 
         Call<AuctionStatusResponse> call = api.getAuctionStatus();
 
-        call.enqueue(new Callback<AuctionStatusResponse>() {
+        call.enqueue(new Callback<>() {
+
             @Override
-            public void onResponse(Call<AuctionStatusResponse> call,
-                                   Response<AuctionStatusResponse> response) {
+            public void onResponse(
+                    @NonNull Call<AuctionStatusResponse> call,
+                    @NonNull Response<AuctionStatusResponse> response) {
 
                 if (response.isSuccessful() && response.body() != null) {
 
@@ -83,26 +90,20 @@ public class Waiting_Activity extends AppCompatActivity {
 
                         handler.removeCallbacks(checkAuctionStatus);
 
-                        Intent intent =
-                                new Intent(Waiting_Activity.this,
-                                        Team_Auction_Activity.class);
+                        startActivity(new Intent(
+                                Waiting_Activity.this,
+                                Team_Auction_Activity.class));
 
-                        startActivity(intent);
                         finish();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<AuctionStatusResponse> call, Throwable t) {
-                // Optional: log error
+            public void onFailure(
+                    @NonNull Call<AuctionStatusResponse> call,
+                    @NonNull Throwable t) {
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        handler.removeCallbacks(checkAuctionStatus);
-        super.onBackPressed();
     }
 }
