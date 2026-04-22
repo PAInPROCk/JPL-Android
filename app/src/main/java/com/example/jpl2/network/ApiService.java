@@ -5,6 +5,7 @@ import com.example.jpl2.model.AuthCheckResponse;
 import com.example.jpl2.model.LoginRequest;
 import com.example.jpl2.model.LoginResponse;
 import com.example.jpl2.model.PlayerResponse;
+import com.example.jpl2.model.StartAuctionRequest;
 import com.example.jpl2.model.TeamResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -66,5 +67,11 @@ public interface ApiService {
 
     @GET("check-auth")
     Call<AuthCheckResponse> checkAuth();
+
+    @POST("start-auction")
+    Call<ResponseBody> startAuction(@Body StartAuctionRequest request);
+
+    @GET("current-auction")
+    Call<ResponseBody> getCurrentAuction();
 
 }

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.jpl2.R;
 import com.example.jpl2.api.ApiClient;
+import com.example.jpl2.model.StartAuctionRequest;
 import com.example.jpl2.network.ApiService;
 
 import java.io.InputStream;
@@ -65,8 +67,59 @@ public class AdminActivity extends AppCompatActivity {
         btnTeam.setOnClickListener(v ->
                 startActivity(new Intent(this, TeamRegisterActivity.class)));
 
-        startAuction.setOnClickListener(v ->
-                startActivity(new Intent(this, AdminAuctionActivity.class)));
+        CheckBox checkRandom = findViewById(R.id.checkRandom);
+
+        startAuction.setOnClickListener(v -> {
+
+            // ❌ If checkbox not selected
+            if (!checkRandom.isChecked()) {
+                Toast.makeText(this, "Please select auction mode", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // ✅ Call API
+            ApiService api = ApiClient.getClient(this).create(ApiService.class);
+
+            StartAuctionRequest request = new StartAuctionRequest("random", 120);
+
+            api.startAuction(request).enqueue(new Callback<ResponseBody>() {
+
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if (response.isSuccessful()) {
+
+                        Toast.makeText(AdminActivity.this, "Auction Started", Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(AdminActivity.this, AdminAuctionActivity.class));
+
+                    } else {
+                        try {
+                            String error = response.errorBody().string();
+
+                            if (error.contains("Auction already running")) {
+
+                                Toast.makeText(AdminActivity.this, "Auction already running - opening...", Toast.LENGTH_SHORT).show();
+
+                                // 🔥 REDIRECT ANYWAY
+                                startActivity(new Intent(AdminActivity.this, AdminAuctionActivity.class));
+
+                            } else {
+                                Toast.makeText(AdminActivity.this, error, Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (Exception e) {
+                            Toast.makeText(AdminActivity.this, "Failed to start auction", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(AdminActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
 
         // Choose file
         btnChooseFile.setOnClickListener(v -> filePicker.launch("*/*"));

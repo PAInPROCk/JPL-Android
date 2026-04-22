@@ -49,6 +49,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="center_vertical">
             <CheckBox
+                android:id="@+id/checkRandom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView

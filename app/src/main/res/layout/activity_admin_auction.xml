@@ -49,6 +49,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvPlayerName"
                             android:padding="5dp"
                             android:background="@drawable/text_border_green"
                             android:text="Player Name"
@@ -203,6 +204,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tvTimer"
                     android:text="02:00"
                     android:textColor="@color/black"
                     android:textSize="24sp"
