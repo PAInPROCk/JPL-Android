@@ -18,6 +18,7 @@ import com.example.jpl2.api.ApiClient;
 import com.example.jpl2.model.StartAuctionRequest;
 import com.example.jpl2.network.ApiService;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import okhttp3.MediaType;
@@ -34,16 +35,26 @@ public class AdminActivity extends AppCompatActivity {
     private TextView tvFileName;
     private Uri fileUri;
 
-    // File picker
+    // 📁 File picker (ZIP ONLY)
     private final ActivityResultLauncher<String> filePicker =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+
                 if (uri != null) {
-                    fileUri = uri;
 
                     String name = uri.getLastPathSegment();
+
+                    // ✅ Allow only ZIP files
+                    if (name == null || !name.toLowerCase().endsWith(".zip")) {
+                        Toast.makeText(this, "Only ZIP files allowed ❌", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    fileUri = uri;
+
+                    // ✅ Show selected file name
                     tvFileName.setText(name);
 
-                    Toast.makeText(this, "File Selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "File Selected ✅", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -121,14 +132,14 @@ public class AdminActivity extends AppCompatActivity {
             });
         });
 
-        // Choose file
+        // 📁 Open file manager
         btnChooseFile.setOnClickListener(v -> filePicker.launch("*/*"));
 
-        // Upload file
+        // 🚀 Upload file
         btnSubmit.setOnClickListener(v -> {
 
             if (fileUri == null) {
-                Toast.makeText(this, "Please select file first", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please select ZIP file first ❌", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -136,44 +147,66 @@ public class AdminActivity extends AppCompatActivity {
                 InputStream inputStream = getContentResolver().openInputStream(fileUri);
 
                 if (inputStream == null) {
-                    Toast.makeText(this, "Cannot read file", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Cannot read file ❌", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-// 🔥 Better way to read file
-                byte[] bytes = new byte[inputStream.available()];
-                inputStream.read(bytes);
+                // ✅ Read file safely
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                byte[] data = new byte[1024];
+                int nRead;
+
+                while ((nRead = inputStream.read(data)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+
+                byte[] bytes = buffer.toByteArray();
                 inputStream.close();
 
-// ✅ FIXED LINE (correct order for new OkHttp)
+                // ✅ RequestBody
                 RequestBody requestFile =
-                        RequestBody.create(MediaType.parse("application/octet-stream"), bytes);
+                        RequestBody.create(MediaType.parse("application/zip"), bytes);
 
+                // ✅ IMPORTANT: field name must match backend
                 MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("file", "upload.csv", requestFile);
+                        MultipartBody.Part.createFormData("file", "players.zip", requestFile);
+
                 ApiService api = ApiClient.getClient(this).create(ApiService.class);
 
                 api.uploadBatch(body).enqueue(new Callback<ResponseBody>() {
 
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
                         if (response.isSuccessful()) {
-                            Toast.makeText(AdminActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(AdminActivity.this, "Upload Success ✅", Toast.LENGTH_SHORT).show();
+
+                            // ✅ Clear file after success
+                            fileUri = null;
+                            tvFileName.setText("No file chosen");
+
                         } else {
-                            Toast.makeText(AdminActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
+                            try {
+                                String error = response.errorBody().string();
+                                Log.e("UPLOAD_ERROR", error);
+                                Toast.makeText(AdminActivity.this, "Upload Failed ❌", Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.e("UPLOAD", "Error: " + t.getMessage());
-                        Toast.makeText(AdminActivity.this, "Error uploading file", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminActivity.this, "Upload Failed ❌", Toast.LENGTH_SHORT).show();
                     }
                 });
 
             } catch (Exception e) {
                 Log.e("UPLOAD", "Exception", e);
-                Toast.makeText(this, "File error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "File error ❌", Toast.LENGTH_SHORT).show();
             }
         });
     }

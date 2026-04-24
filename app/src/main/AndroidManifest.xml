@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JPL2"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+
+        >
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.Waiting_Activity"
             android:exported="false" />
@@ -55,12 +60,12 @@
             android:exported="true" />
         <activity
             android:name=".activities.HomeActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity android:name=".activities.PlayerActivity" />
         <activity android:name=".activities.TeamsActivity" />
-        <activity android:name=".activities.SplashActivity" android:exported="true">
+        <activity
+            android:name=".activities.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

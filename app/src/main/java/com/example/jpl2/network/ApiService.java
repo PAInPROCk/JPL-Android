@@ -14,6 +14,8 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.Part;
 
+import com.example.jpl2.model.AuthCheckResponse;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -59,14 +61,13 @@ public interface ApiService {
     );
 
     @Multipart
-    @POST("upload-batch")
+    @POST("upload-players")
     Call<ResponseBody> uploadBatch(@Part MultipartBody.Part file);
+    @GET("check-auth")
+    Call<AuthCheckResponse> checkAuth();
 
     @GET("auction-status")
     Call<AuctionStatusResponse> getAuctionStatus();
-
-    @GET("check-auth")
-    Call<AuthCheckResponse> checkAuth();
 
     @POST("start-auction")
     Call<ResponseBody> startAuction(@Body StartAuctionRequest request);

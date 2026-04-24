@@ -50,5 +50,3 @@ public class PlayerActivity extends AppCompatActivity {
         viewModel.loadPlayers(this);
     }
 }
-
-
