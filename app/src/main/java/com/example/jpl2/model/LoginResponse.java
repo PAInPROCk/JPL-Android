@@ -1,24 +1,18 @@
 package com.example.jpl2.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class LoginResponse {
-    public String message;
+    public  String message;
     public String token;
     public User user;
 
-    public static class User {
+    public static class User{
         public int id;
         public String name;
+        public String email;
         public String role;
 
-        @SerializedName("team_id")
-        public Integer teamId;
-
-        @SerializedName("team_purse")
-        public int teamPurse;
-
-        @SerializedName("team_logo")
-        public String teamLogo;
+        public Integer team_id;
+        public int team_purse;
+        public String team_logo;
     }
 }

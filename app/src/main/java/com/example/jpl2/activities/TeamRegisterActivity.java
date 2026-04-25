@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.jpl2.R;
+import com.example.jpl2.utils.SessionManager;
 import com.example.jpl2.viewmodel.TeamViewModel;
 
 import okhttp3.MediaType;
@@ -18,47 +19,128 @@ public class TeamRegisterActivity extends AppCompatActivity {
 
     EditText etTeamName, etCaptain, etMobile, etEmail;
     Button btnSubmit;
+
     TeamViewModel viewModel;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        session = new SessionManager(this);
+
+        // ----------------------------------
+        // Protect Page (Admin Only)
+        // ----------------------------------
+        if (!session.isLoggedIn()) {
+            Toast.makeText(this,
+                    "Please login first",
+                    Toast.LENGTH_SHORT).show();
+
+            finish();
+            return;
+        }
+
+        if (!session.isAdmin()) {
+            Toast.makeText(this,
+                    "Access Denied",
+                    Toast.LENGTH_SHORT).show();
+
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_team_register);
 
+        // ----------------------------------
+        // Views
+        // ----------------------------------
         etTeamName = findViewById(R.id.etTeamName);
         etCaptain = findViewById(R.id.etCaptain);
         etMobile = findViewById(R.id.etMobile);
         etEmail = findViewById(R.id.email);
         btnSubmit = findViewById(R.id.btnSubmit);
 
-        viewModel = new ViewModelProvider(this).get(TeamViewModel.class);
+        // ----------------------------------
+        // ViewModel
+        // ----------------------------------
+        viewModel =
+                new ViewModelProvider(this)
+                        .get(TeamViewModel.class);
 
-        btnSubmit.setOnClickListener(v -> {
+        // ----------------------------------
+        // Submit Button
+        // ----------------------------------
+        btnSubmit.setOnClickListener(v -> submitTeam());
+    }
 
-            String teamName = etTeamName.getText().toString();
-            String captain = etCaptain.getText().toString();
-            String mobile = etMobile.getText().toString();
-            String email = etEmail.getText().toString();
+    // ----------------------------------
+    // Submit Logic
+    // ----------------------------------
+    private void submitTeam() {
 
-            if(teamName.isEmpty() || captain.isEmpty() || mobile.isEmpty() || email.isEmpty()){
-                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        String teamName =
+                etTeamName.getText().toString().trim();
 
-            RequestBody teamNameBody = RequestBody.create(MediaType.parse("text/plain"), teamName);
-            RequestBody captainBody = RequestBody.create(MediaType.parse("text/plain"), captain);
-            RequestBody mobileBody = RequestBody.create(MediaType.parse("text/plain"), mobile);
-            RequestBody emailBody = RequestBody.create(MediaType.parse("text/plain"), email);
+        String captain =
+                etCaptain.getText().toString().trim();
 
-            viewModel.addTeam(
-                    this,   // ✅ ADD CONTEXT
-                    teamNameBody,
-                    captainBody,
-                    mobileBody,
-                    emailBody
-            );
+        String mobile =
+                etMobile.getText().toString().trim();
 
-            Toast.makeText(this, "Team Submitted", Toast.LENGTH_SHORT).show();
-        });
+        String email =
+                etEmail.getText().toString().trim();
+
+        // Validation
+        if (teamName.isEmpty()
+                || captain.isEmpty()
+                || mobile.isEmpty()
+                || email.isEmpty()) {
+
+            Toast.makeText(this,
+                    "Fill all fields",
+                    Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+
+        RequestBody teamNameBody = body(teamName);
+        RequestBody captainBody = body(captain);
+        RequestBody mobileBody = body(mobile);
+        RequestBody emailBody = body(email);
+
+        viewModel.addTeam(
+                this,
+                teamNameBody,
+                captainBody,
+                mobileBody,
+                emailBody
+        );
+
+        Toast.makeText(this,
+                "Team Submitted",
+                Toast.LENGTH_SHORT).show();
+
+        clearForm();
+    }
+
+    // ----------------------------------
+    // Helper
+    // ----------------------------------
+    private RequestBody body(String value) {
+        return RequestBody.create(
+                MediaType.parse("text/plain"),
+                value
+        );
+    }
+
+    // ----------------------------------
+    // Clear Form
+    // ----------------------------------
+    private void clearForm() {
+        etTeamName.setText("");
+        etCaptain.setText("");
+        etMobile.setText("");
+        etEmail.setText("");
     }
 }

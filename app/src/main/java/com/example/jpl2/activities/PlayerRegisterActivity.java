@@ -1,5 +1,6 @@
 package com.example.jpl2.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.jpl2.R;
+import com.example.jpl2.utils.SessionManager;
 import com.example.jpl2.viewmodel.PlayerViewModel;
 
 import okhttp3.MediaType;
@@ -20,17 +22,47 @@ import okhttp3.RequestBody;
 public class PlayerRegisterActivity extends AppCompatActivity {
 
     EditText etPlayerName, etFatherName, etSurname, etAge, etMobile;
-    EditText etRole, etCategory, etStyle, etBasePrice, etNickName;;
+    EditText etRole, etCategory, etStyle, etBasePrice, etNickName;
+
     Button btnSubmit;
 
-    PlayerViewModel viewModel;
     Spinner genderSpinner;
+
+    PlayerViewModel viewModel;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        session = new SessionManager(this);
+
+        // ----------------------------------
+        // Protect Page (Admin Only)
+        // ----------------------------------
+        if (!session.isLoggedIn()) {
+            Toast.makeText(this,
+                    "Please login first",
+                    Toast.LENGTH_SHORT).show();
+
+            finish();
+            return;
+        }
+
+        if (!session.isAdmin()) {
+            Toast.makeText(this,
+                    "Access Denied",
+                    Toast.LENGTH_SHORT).show();
+
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_player_register);
 
+        // ----------------------------------
+        // Views
+        // ----------------------------------
         etPlayerName = findViewById(R.id.etplayerName);
         etFatherName = findViewById(R.id.etfatherName);
         etSurname = findViewById(R.id.etsurName);
@@ -46,57 +78,165 @@ public class PlayerRegisterActivity extends AppCompatActivity {
         genderSpinner = findViewById(R.id.etgenderspinner);
         btnSubmit = findViewById(R.id.btnSubmit);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.gender_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        // ----------------------------------
+        // Spinner
+        // ----------------------------------
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(
+                        this,
+                        R.array.gender_array,
+                        android.R.layout.simple_spinner_item
+                );
+
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+        );
+
         genderSpinner.setAdapter(adapter);
-        viewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
-        btnSubmit.setOnClickListener(v -> {
+        // ----------------------------------
+        // ViewModel
+        // ----------------------------------
+        viewModel =
+                new ViewModelProvider(this)
+                        .get(PlayerViewModel.class);
 
-            String name = etPlayerName.getText().toString();
-            String father = etFatherName.getText().toString();
-            String surname = etSurname.getText().toString();
-            String age = etAge.getText().toString();
-            String mobile = etMobile.getText().toString();
-            String price = etBasePrice.getText().toString();
-            String category = etCategory.getText().toString();
-            String style = etStyle.getText().toString();
-            String nickname = etNickName.getText().toString();
+        // ----------------------------------
+        // Submit
+        // ----------------------------------
+        btnSubmit.setOnClickListener(v -> submitPlayer());
+    }
 
-            String role = etRole.getText().toString();
-            String selectedGender = genderSpinner.getSelectedItem().toString();
+    // ----------------------------------
+    // Submit Logic
+    // ----------------------------------
+    private void submitPlayer() {
 
-            if(name.isEmpty() || father.isEmpty() || role.isEmpty() || price.isEmpty()){
-                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        String name =
+                etPlayerName.getText().toString().trim();
 
-            // Convert to RequestBody
-            RequestBody playerName = RequestBody.create(MediaType.parse("text/plain"), name);
-            RequestBody fatherName = RequestBody.create(MediaType.parse("text/plain"), father);
-            RequestBody surName = RequestBody.create(MediaType.parse("text/plain"), surname);
-            RequestBody nickName = RequestBody.create(MediaType.parse("text/plain"), nickname);
+        String father =
+                etFatherName.getText().toString().trim();
 
-            RequestBody categoryBody = RequestBody.create(MediaType.parse("text/plain"), category);
-            RequestBody styleBody = RequestBody.create(MediaType.parse("text/plain"), style);
-            RequestBody basePrice = RequestBody.create(MediaType.parse("text/plain"), price);
+        String surname =
+                etSurname.getText().toString().trim();
 
-            // TEMP: No image
-            MultipartBody.Part imagePart = null;
+        String age =
+                etAge.getText().toString().trim();
 
-            viewModel.addPlayer(
-                    this,   // ✅ ADD CONTEXT
-                    playerName,
-                    fatherName,
-                    surName,
-                    nickName,
-                    categoryBody,
-                    styleBody,
-                    basePrice,
-                    imagePart
-            );
+        String mobile =
+                etMobile.getText().toString().trim();
 
-            Toast.makeText(this, "Player Submitted", Toast.LENGTH_SHORT).show();
-        });
+        String nickname =
+                etNickName.getText().toString().trim();
+
+        String role =
+                etRole.getText().toString().trim();
+
+        String category =
+                etCategory.getText().toString().trim();
+
+        String style =
+                etStyle.getText().toString().trim();
+
+        String price =
+                etBasePrice.getText().toString().trim();
+
+        String gender =
+                genderSpinner.getSelectedItem()
+                        .toString();
+
+        // ----------------------------------
+        // Validation
+        // ----------------------------------
+        if (name.isEmpty()
+                || father.isEmpty()
+                || role.isEmpty()
+                || price.isEmpty()) {
+
+            Toast.makeText(this,
+                    "Fill all required fields",
+                    Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+
+        // ----------------------------------
+        // Request Bodies
+        // ----------------------------------
+        RequestBody playerName =
+                body(name);
+
+        RequestBody fatherName =
+                body(father);
+
+        RequestBody surName =
+                body(surname);
+
+        RequestBody nickName =
+                body(nickname);
+
+        RequestBody categoryBody =
+                body(category);
+
+        RequestBody styleBody =
+                body(style);
+
+        RequestBody basePrice =
+                body(price);
+
+        // TEMP no image upload
+        MultipartBody.Part imagePart = null;
+
+        // ----------------------------------
+        // API Call
+        // ----------------------------------
+        viewModel.addPlayer(
+                this,
+                playerName,
+                fatherName,
+                surName,
+                nickName,
+                categoryBody,
+                styleBody,
+                basePrice,
+                imagePart
+        );
+
+        Toast.makeText(this,
+                "Player Submitted",
+                Toast.LENGTH_SHORT).show();
+
+        clearForm();
+    }
+
+    // ----------------------------------
+    // Helper RequestBody
+    // ----------------------------------
+    private RequestBody body(String value) {
+        return RequestBody.create(
+                MediaType.parse("text/plain"),
+                value
+        );
+    }
+
+    // ----------------------------------
+    // Clear Form
+    // ----------------------------------
+    private void clearForm() {
+
+        etPlayerName.setText("");
+        etFatherName.setText("");
+        etSurname.setText("");
+        etAge.setText("");
+        etMobile.setText("");
+        etNickName.setText("");
+
+        etRole.setText("");
+        etCategory.setText("");
+        etStyle.setText("");
+        etBasePrice.setText("");
+
+        genderSpinner.setSelection(0);
     }
 }

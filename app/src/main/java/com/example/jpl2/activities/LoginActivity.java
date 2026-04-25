@@ -1,18 +1,17 @@
 package com.example.jpl2.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.jpl2.R;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.jpl2.R;
+import com.example.jpl2.utils.SessionManager;
 import com.example.jpl2.viewmodel.AuthViewModel;
-import com.example.jpl2.model.LoginResponse;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,13 +49,21 @@ public class LoginActivity extends AppCompatActivity {
 
             if (result != null && result.user != null) {
 
-                String token = result.token;
-                getSharedPreferences("APP_PREF", MODE_PRIVATE)
-                        .edit()
-                        .putString("TOKEN", token)
-                        .apply();
+                SessionManager session = new SessionManager(this);
+
+                session.saveLoginSession(
+                        result.token,
+                        result.user.role,
+                        result.user.name,
+                        result.user.email,
+                        result.user.team_id != null ? result.user.team_id : 0,
+                        result.user.team_logo,
+                        result.user.name,
+                        result.user.team_purse
+                );
 
                 String role = result.user.role;
+
 
                 if (role.equals("admin")) {
                     Toast.makeText(LoginActivity.this, "Admin Login", Toast.LENGTH_SHORT).show();

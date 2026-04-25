@@ -12,7 +12,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/playerCard"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
@@ -54,9 +54,13 @@
                             android:textSize="10sp"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/pName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/text_border_grey"
+                            android:textColor="@color/black"
                             android:hint="Name"
+                            android:padding="5dp"
                             android:layout_marginStart="3dp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -78,6 +82,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:hint="A"
+                            android:id="@+id/pCategory"
+                            android:background="@drawable/text_border_grey"
+                            android:textColor="@color/black"
+                            android:padding="5dp"
                             android:layout_marginStart="3dp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -94,10 +102,14 @@
                             android:text="Style: "
                             android:textColor="#fff"/>
                         <TextView
+                            android:id="@+id/pStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:hint="Right Hand"
+                            android:background="@drawable/text_border_grey"
+                            android:textColor="@color/black"
+                            android:padding="5dp"
                             android:layout_marginStart="3dp"/>
 
                     </LinearLayout>
@@ -235,6 +247,7 @@
 
                     <!-- Team Logo -->
                     <ImageView
+                        android:id="@+id/teamLogo"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/player"
