@@ -1,6 +1,7 @@
 package com.example.jpl2.activities;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +16,19 @@ public class sold_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sold);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        TextView name = findViewById(R.id.splayerName);
+        TextView price = findViewById(R.id.soldPrice);
+        TextView team = findViewById(R.id.teamName);
+
+        name.setText(getIntent().getStringExtra("player_name"));
+        price.setText("₹" + getIntent().getDoubleExtra("sold_price", 0));
+        team.setText(getIntent().getStringExtra("team_name"));
+
+        // 🔥 AUTO RETURN AFTER 10 SEC
+        new android.os.Handler().postDelayed(() -> {
+            finish();
+        }, 10000);
     }
 }

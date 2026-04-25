@@ -75,4 +75,18 @@ public interface ApiService {
     @GET("current-auction")
     Call<ResponseBody> getCurrentAuction();
 
+    @POST("cancel-auction")
+    Call<ResponseBody> cancelAuction();
+
+    @POST("pause-auction")
+    Call<ResponseBody> pauseAuction();
+
+    @POST("resume-auction")
+    Call<ResponseBody> resumeAuction();
+
+    @POST("next-auction")
+    Call<ResponseBody> nextPlayer();
+
+
+
 }

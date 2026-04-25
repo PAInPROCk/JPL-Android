@@ -217,6 +217,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <Button
+                        android:id="@+id/pause"
                         android:layout_width="130dp"
                         android:layout_height="40dp"
                         android:background="@drawable/pause_bg"
@@ -226,6 +227,7 @@
                         app:icon="@drawable/pause_ed"
                         app:iconSize="30dp"/>
                     <Button
+                        android:id="@+id/resume"
                         android:layout_width="130dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="10dp"
