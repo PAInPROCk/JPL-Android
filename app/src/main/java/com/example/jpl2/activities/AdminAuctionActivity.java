@@ -2,458 +2,399 @@ package com.example.jpl2.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import io.socket.client.Socket;
-import okhttp3.ResponseBody;
-
-import org.json.JSONObject;
-import org.json.JSONException;
-
-import com.example.jpl2.api.ApiClient;
-import com.example.jpl2.network.ApiService;
-import com.example.jpl2.network.SocketManager;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jpl2.R;
 import com.example.jpl2.adapter.NotificationAdapter;
+import com.example.jpl2.api.ApiClient;
+import com.example.jpl2.network.ApiService;
+import com.example.jpl2.network.SocketManager;
 import com.example.jpl2.utils.AuctionTimerManager;
+import com.example.jpl2.utils.SessionManager;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import io.socket.client.Socket;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdminAuctionActivity extends AppCompatActivity {
+
     RecyclerView recyclerView;
     NotificationAdapter adapter;
     ArrayList<String> notifications;
 
     TextView tvTimer, tvPlayerName, tvCurrentPrice;
-    Socket socket;
-    boolean isCancelTriggered = false;
 
-    public void addNotification(String message){
-        notifications.add(0, message); // Set newest bid on top
-        adapter.notifyItemInserted(0);
-        recyclerView.scrollToPosition(0);
-    }
+    Button btnCancel, btnPause, btnResume, btnNext;
+
+    Socket socket;
+    SessionManager session;
+
+    // 🔥 IMPORTANT FLAG
+    boolean isCancelTriggered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        session = new SessionManager(this);
+
+        // 🔒 Auth Protection
+        if (!session.isLoggedIn()) {
+            Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        if (!session.isAdmin()) {
+            Toast.makeText(this, "Access Denied", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_admin_auction);
 
-        // ✅ FIRST: initialize views
+        initViews();
+        initRecycler();
+        initTimer();
+        setupButtons();
+
+        socket = SocketManager.getSocket();
+        setupSocketListeners();
+
+        socket.connect();
+        loadCurrentAuction();
+    }
+
+    // ---------------------------------------------------
+    // Init Views
+    // ---------------------------------------------------
+    private void initViews() {
+
         tvTimer = findViewById(R.id.tvTimer);
         tvPlayerName = findViewById(R.id.tvPlayerName);
         tvCurrentPrice = findViewById(R.id.playerCurrentPrice);
 
         recyclerView = findViewById(R.id.notificationRecycler);
 
-        Button btnCancel = findViewById(R.id.cancel);
-        Button btnPause = findViewById(R.id.pause);
-        Button btnResume = findViewById(R.id.resume);
-        Button btnNext = findViewById(R.id.nextPlayer);
+        btnCancel = findViewById(R.id.cancel);
+        btnPause = findViewById(R.id.pause);
+        btnResume = findViewById(R.id.resume);
+        btnNext = findViewById(R.id.nextPlayer);
 
         btnPause.setEnabled(true);
         btnResume.setEnabled(false);
+    }
 
-        AuctionTimerManager.getInstance().getTimer().observe(this, seconds -> {
-
-            int min = seconds / 60;
-            int sec = seconds % 60;
-
-            String time = String.format("%02d:%02d", min, sec);
-            tvTimer.setText(time);
-
-        });
+    // ---------------------------------------------------
+    // Recycler
+    // ---------------------------------------------------
+    private void initRecycler() {
 
         notifications = new ArrayList<>();
-        notifications.add("No Bids Yet");
+        notifications.add("Waiting for Auction...");
 
         adapter = new NotificationAdapter(notifications);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
 
-        btnCancel.setOnClickListener(v -> {
+    // ---------------------------------------------------
+    // Timer
+    // ---------------------------------------------------
+    private void initTimer() {
 
-            ApiService api = ApiClient.getClient(this).create(ApiService.class);
+        AuctionTimerManager.getInstance()
+                .getTimer()
+                .observe(this, seconds -> {
 
-            // 🔥 disable button (important)
-            btnCancel.setEnabled(false);
+                    int min = seconds / 60;
+                    int sec = seconds % 60;
 
-            isCancelTriggered = true; // 🔥 ADD THIS LINE
+                    tvTimer.setText(String.format("%02d:%02d", min, sec));
+                });
+    }
 
+    // ---------------------------------------------------
+    // Buttons
+    // ---------------------------------------------------
+    private void setupButtons() {
 
-            api.cancelAuction().enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        btnCancel.setOnClickListener(v -> cancelAuction());
+        btnPause.setOnClickListener(v -> pauseAuction());
+        btnResume.setOnClickListener(v -> resumeAuction());
+        btnNext.setOnClickListener(v -> nextPlayer());
+    }
 
-                    if (response.isSuccessful()) {
+    // ---------------------------------------------------
+    // Socket Events
+    // ---------------------------------------------------
+    private void setupSocketListeners() {
 
-                        Toast.makeText(AdminAuctionActivity.this, "Auction Cancelled", Toast.LENGTH_SHORT).show();
+        socket.on(Socket.EVENT_CONNECT, args ->
+                runOnUiThread(() -> socket.emit("join_auction")));
 
-                    } else {
-                        btnCancel.setEnabled(true); // re-enable on failure
-                        Toast.makeText(AdminAuctionActivity.this, "Cancel failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
+        socket.on("auction_started", args ->
+                runOnUiThread(() -> {
+                    try {
+                        JSONObject data = (JSONObject) args[0];
+                        JSONObject player = data.getJSONObject("player");
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    btnCancel.setEnabled(true);
-                    Toast.makeText(AdminAuctionActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                        String name = player.getString("name");
+                        double price = player.getDouble("base_price");
 
-        });
+                        tvPlayerName.setText(name);
+                        tvCurrentPrice.setText("₹" + price);
 
-        //Pause
-        btnPause.setOnClickListener(v -> {
-
-            ApiService api = ApiClient.getClient(this).create(ApiService.class);
-
-            btnPause.setEnabled(false);
-
-            api.pauseAuction().enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                    if (response.isSuccessful()) {
-                        Toast.makeText(AdminAuctionActivity.this, "Auction Paused", Toast.LENGTH_SHORT).show();
-                    } else {
                         btnPause.setEnabled(true);
-                        Toast.makeText(AdminAuctionActivity.this, "Pause failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    btnPause.setEnabled(true);
-                    Toast.makeText(AdminAuctionActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        });
-
-        //Resume
-        btnResume.setOnClickListener(v -> {
-
-            ApiService api = ApiClient.getClient(this).create(ApiService.class);
-
-            btnResume.setEnabled(false);
-
-            api.resumeAuction().enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                    if (response.isSuccessful()) {
-                        Toast.makeText(AdminAuctionActivity.this, "Auction Resumed", Toast.LENGTH_SHORT).show();
-                    } else {
-                        btnResume.setEnabled(true);
-                        Toast.makeText(AdminAuctionActivity.this, "Resume failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    btnResume.setEnabled(true);
-                    Toast.makeText(AdminAuctionActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        });
-
-        btnNext.setOnClickListener(v -> {
-
-            ApiService api = ApiClient.getClient(this).create(ApiService.class);
-
-            btnNext.setEnabled(false);
-
-            api.nextPlayer().enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                    if (response.isSuccessful()) {
-
-                        Toast.makeText(AdminAuctionActivity.this, "Moving to next player...", Toast.LENGTH_SHORT).show();
-
-                    } else {
+                        btnResume.setEnabled(false);
                         btnNext.setEnabled(true);
-                        Toast.makeText(AdminAuctionActivity.this, "Next player failed", Toast.LENGTH_SHORT).show();
+
+                        addNotification(name + " is live now!");
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }
+                }));
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    btnNext.setEnabled(true);
-                    Toast.makeText(AdminAuctionActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+        socket.on("timer_update", args ->
+                runOnUiThread(() -> {
+                    try {
+                        JSONObject data = (JSONObject) args[0];
+                        int sec = data.getInt("remaining_seconds");
 
-        });
+                        AuctionTimerManager.getInstance().updateFromServer(sec);
 
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }));
 
+        socket.on("new_bid", args ->
+                runOnUiThread(() -> {
+                    try {
+                        JSONObject data = (JSONObject) args[0];
 
-        // ✅ THEN socket
-        socket = SocketManager.getSocket();
+                        String team = data.getString("team_name");
+                        int amount = data.getInt("amount");
 
-        // 🔥 AUCTION STARTED
-        socket.on("auction_started", args -> {
-            runOnUiThread(() -> {
-                try {
-                    JSONObject data = (JSONObject) args[0];
+                        tvCurrentPrice.setText("₹" + amount);
 
-                    JSONObject player = data.getJSONObject("player");
+                        addNotification(team + " bid ₹" + amount);
 
-                    String name = player.getString("name");
-                    double basePrice = player.getDouble("base_price");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }));
 
-                    tvPlayerName.setText(name);
-                    tvCurrentPrice.setText("₹" + basePrice);
-
-                    btnNext.setEnabled(true);
-                    btnPause.setEnabled(true);
-                    btnResume.setEnabled(false);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            });
-        });
-
-        // 🔥 TIMER UPDATE
-        socket.on("timer_update", args -> {
-            try {
-                JSONObject data = (JSONObject) args[0];
-                int seconds = data.getInt("remaining_seconds");
-
-                AuctionTimerManager.getInstance().updateFromServer(seconds);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        socket.on("auction_paused", args -> {
-            try {
-                JSONObject data = (JSONObject) args[0];
-                int seconds = data.getInt("remaining_seconds");
-
-                AuctionTimerManager.getInstance().pause(seconds);
-
+        socket.on("auction_paused", args ->
                 runOnUiThread(() -> {
                     btnPause.setEnabled(false);
                     btnResume.setEnabled(true);
-                });
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+                    try {
+                        JSONObject data = (JSONObject) args[0];
+                        int sec = data.getInt("remaining_seconds");
 
-        socket.on("auction_resumed", args -> {
-            try {
-                JSONObject data = (JSONObject) args[0];
-                int seconds = data.getInt("remaining_seconds");
+                        AuctionTimerManager.getInstance().pause(sec);
 
-                AuctionTimerManager.getInstance().resume(seconds);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }));
 
+        socket.on("auction_resumed", args ->
                 runOnUiThread(() -> {
                     btnPause.setEnabled(true);
                     btnResume.setEnabled(false);
-                });
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+                    try {
+                        JSONObject data = (JSONObject) args[0];
+                        int sec = data.getInt("remaining_seconds");
 
+                        AuctionTimerManager.getInstance().resume(sec);
 
-
-        socket.on("auction_status", args -> {
-            runOnUiThread(() -> {
-                try {
-                    JSONObject data = (JSONObject) args[0];
-
-                    JSONObject player = data.getJSONObject("player");
-
-                    String name = player.getString("name");
-                    double basePrice = player.getDouble("base_price");
-
-                    tvPlayerName.setText(name);
-                    tvCurrentPrice.setText("₹" + basePrice);
-
-                    // 🔥 HANDLE PAUSE STATE
-                    boolean paused = data.optBoolean("paused", false);
-
-                    if (paused) {
-                        btnPause.setEnabled(false);
-                        btnResume.setEnabled(true);
-                    } else {
-                        btnPause.setEnabled(true);
-                        btnResume.setEnabled(false);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                }));
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-        });
+        // 🔥 MOST IMPORTANT BLOCK
+        socket.on("auction_ended", args ->
+                runOnUiThread(() -> {
+                    try {
+                        JSONObject data = (JSONObject) args[0];
+                        String status = data.getString("status");
 
-        socket.on("auction_state", args -> {
-            runOnUiThread(() -> {
-                try {
-                    JSONObject data = (JSONObject) args[0];
+                        AuctionTimerManager.getInstance().reset();
 
-                    if (data.getString("status").equals("no_active_auction")) {
+                        Intent intent;
 
-                        Log.d("AUCTION", "No active auction, retrying...");
+                        if (status.equals("sold")) {
+                            intent = new Intent(this, sold_activity.class);
+                        } else {
+                            intent = new Intent(this, unsold_activity.class);
+                        }
 
-                        // 🔥 Retry after delay
-                        new android.os.Handler().postDelayed(() -> {
-                            socket.emit("join_auction");
-                        }, 1000);
+                        intent.putExtra("player_name",
+                                data.getJSONObject("player").getString("name"));
+
+                        intent.putExtra("team_name",
+                                data.optString("team_name", ""));
+
+                        intent.putExtra("sold_price",
+                                data.optDouble("sold_price", 0));
+
+                        // 🔥 KEY FIX
+                        intent.putExtra("is_cancel", isCancelTriggered);
+
+                        isCancelTriggered = false;
+
+                        startActivity(intent);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                }));
+    }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-        });
+    // ---------------------------------------------------
+    // API CALLS
+    // ---------------------------------------------------
+    private void cancelAuction() {
 
-        socket.on("next_player_loading", args -> {
+        btnCancel.setEnabled(false);
 
-            runOnUiThread(() -> {
-                try {
-                    JSONObject data = (JSONObject) args[0];
-                    int delay = data.getInt("delay");
+        isCancelTriggered = true; // 🔥 IMPORTANT
 
-                    Toast.makeText(this, "Next player in " + delay + " sec", Toast.LENGTH_SHORT).show();
+        getApi().cancelAuction()
+                .enqueue(defaultCallback("Auction Cancelled", btnCancel));
+    }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+    private void pauseAuction() {
 
-        });
+        btnPause.setEnabled(false);
 
-        socket.on(Socket.EVENT_CONNECT, args -> {
-            Log.d("SOCKET", "Connected ✅");
+        getApi().pauseAuction()
+                .enqueue(defaultCallback("Auction Paused", btnPause));
+    }
 
-            // 🔥 NOW SAFE TO JOIN
-            socket.emit("join_auction");
+    private void resumeAuction() {
 
-            ApiService api = ApiClient.getClient(this).create(ApiService.class);
+        btnResume.setEnabled(false);
 
-            api.getCurrentAuction().enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
+        getApi().resumeAuction()
+                .enqueue(defaultCallback("Auction Resumed", btnResume));
+    }
+
+    private void nextPlayer() {
+
+        btnNext.setEnabled(false);
+
+        getApi().nextPlayer()
+                .enqueue(defaultCallback("Loading Next Player...", btnNext));
+    }
+
+    // ---------------------------------------------------
+    // Load Existing Auction
+    // ---------------------------------------------------
+    private void loadCurrentAuction() {
+
+        getApi().getCurrentAuction()
+                .enqueue(new Callback<ResponseBody>() {
+
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
                         try {
+
+                            if (!response.isSuccessful() || response.body() == null)
+                                return;
+
                             String res = response.body().string();
                             JSONObject data = new JSONObject(res);
 
-                            if (data.getString("status").equals("auction_active")) {
+                            if (!data.getString("status").equals("auction_active"))
+                                return;
 
-                                JSONObject player = data.getJSONObject("player");
+                            JSONObject player = data.getJSONObject("player");
 
-                                String name = player.getString("name");
-                                double basePrice = player.getDouble("base_price");
-
-                                tvPlayerName.setText(name);
-                                tvCurrentPrice.setText("₹" + basePrice);
-
-                                // 🔥 ADD THIS BLOCK (IMPORTANT)
-                                boolean paused = data.optBoolean("paused", false);
-
-                                if (paused) {
-                                    btnPause.setEnabled(false);
-                                    btnResume.setEnabled(true);
-                                } else {
-                                    btnPause.setEnabled(true);
-                                    btnResume.setEnabled(false);
-                                }
-                            }
+                            tvPlayerName.setText(player.getString("name"));
+                            tvCurrentPrice.setText("₹" + player.getDouble("base_price"));
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    t.printStackTrace();
-                }
-            });
-        });
-
-        socket.on("auction_ended", args -> {
-
-            runOnUiThread(() -> {
-                try {
-                    JSONObject data = (JSONObject) args[0];
-
-                    String status = data.getString("status");
-
-                    AuctionTimerManager.getInstance().reset();
-
-                    Intent intent;
-
-                    if (status.equals("sold")) {
-                        intent = new Intent(AdminAuctionActivity.this, sold_activity.class);
-                    } else {
-                        intent = new Intent(AdminAuctionActivity.this, unsold_activity.class);
-                    }
-
-                    intent.putExtra("player_name", data.getJSONObject("player").getString("name"));
-                    intent.putExtra("team_name", data.optString("team_name", ""));
-                    intent.putExtra("sold_price", data.optDouble("sold_price", 0));
-
-                    // 🔥 PASS CANCEL FLAG
-                    intent.putExtra("is_cancel", isCancelTriggered);
-
-                    isCancelTriggered = false; // reset AFTER passing
-
-                    startActivity(intent);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-        });
-
-
-        socket.connect();
-
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {}
+                });
     }
+
+    private ApiService getApi() {
+        return ApiClient.getClient(this).create(ApiService.class);
+    }
+
+    private void addNotification(String msg) {
+
+        notifications.add(0, msg);
+        adapter.notifyItemInserted(0);
+        recyclerView.scrollToPosition(0);
+    }
+
+    private Callback<ResponseBody> defaultCallback(String successMsg, Button btn) {
+
+        return new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                btn.setEnabled(true);
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(AdminAuctionActivity.this, successMsg, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AdminAuctionActivity.this, "Action failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                btn.setEnabled(true);
+
+                Toast.makeText(AdminAuctionActivity.this,
+                        "Error: " + t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         if (socket != null) {
             socket.off("auction_started");
             socket.off("timer_update");
-            socket.off("auction_status");
+            socket.off("new_bid");
             socket.off("auction_paused");
             socket.off("auction_resumed");
-            socket.off("next_player_loading");
             socket.off("auction_ended");
             socket.disconnect();
         }
