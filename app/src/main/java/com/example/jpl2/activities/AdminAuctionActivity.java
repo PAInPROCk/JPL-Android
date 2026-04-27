@@ -44,6 +44,7 @@ public class AdminAuctionActivity extends AppCompatActivity {
 
     TextView tvTimer, tvPlayerName, tvCurrentPrice;
     Socket socket;
+    boolean isCancelTriggered = false;
 
     public void addNotification(String message){
         notifications.add(0, message); // Set newest bid on top
@@ -96,6 +97,9 @@ public class AdminAuctionActivity extends AppCompatActivity {
 
             // 🔥 disable button (important)
             btnCancel.setEnabled(false);
+
+            isCancelTriggered = true; // 🔥 ADD THIS LINE
+
 
             api.cancelAuction().enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -419,13 +423,14 @@ public class AdminAuctionActivity extends AppCompatActivity {
                         intent = new Intent(AdminAuctionActivity.this, unsold_activity.class);
                     }
 
-                    // 🔥 PASS DATA (important)
                     intent.putExtra("player_name", data.getJSONObject("player").getString("name"));
-                    intent.putExtra("base_price", data.getJSONObject("player").getDouble("base_price"));
-
-                    // optional (if backend sends)
                     intent.putExtra("team_name", data.optString("team_name", ""));
                     intent.putExtra("sold_price", data.optDouble("sold_price", 0));
+
+                    // 🔥 PASS CANCEL FLAG
+                    intent.putExtra("is_cancel", isCancelTriggered);
+
+                    isCancelTriggered = false; // reset AFTER passing
 
                     startActivity(intent);
 

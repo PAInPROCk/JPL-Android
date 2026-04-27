@@ -1,5 +1,6 @@
 package com.example.jpl2.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -22,7 +23,14 @@ public class unsold_activity extends AppCompatActivity {
 
         name.setText(getIntent().getStringExtra("player_name"));
 
+        boolean isCancel = getIntent().getBooleanExtra("is_cancel", false);
+
         new android.os.Handler().postDelayed(() -> {
+
+            if (isCancel) {
+                startActivity(new Intent(this, AdminActivity.class));
+            }
+
             finish();
         }, 10000);
     }

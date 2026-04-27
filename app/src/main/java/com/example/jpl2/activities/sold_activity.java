@@ -1,5 +1,6 @@
 package com.example.jpl2.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -26,8 +27,15 @@ public class sold_activity extends AppCompatActivity {
         price.setText("₹" + getIntent().getDoubleExtra("sold_price", 0));
         team.setText(getIntent().getStringExtra("team_name"));
 
+        boolean isCancel = getIntent().getBooleanExtra("is_cancel", false);
+
         // 🔥 AUTO RETURN AFTER 10 SEC
         new android.os.Handler().postDelayed(() -> {
+
+            if (isCancel) {
+                startActivity(new Intent(this, AdminActivity.class));
+            }
+
             finish();
         }, 10000);
     }
