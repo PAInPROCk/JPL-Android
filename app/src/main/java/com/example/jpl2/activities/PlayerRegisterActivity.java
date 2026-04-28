@@ -85,7 +85,7 @@ public class PlayerRegisterActivity extends AppCompatActivity {
                 ArrayAdapter.createFromResource(
                         this,
                         R.array.gender_array,
-                        android.R.layout.simple_spinner_item
+                        R.layout.simple_spinner_item
                 );
 
         adapter.setDropDownViewResource(
