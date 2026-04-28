@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -14,312 +13,398 @@
         android:columnCount="2"
         android:padding="12dp">
 
+        <!-- IMAGE SECTION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/playerImage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/player"
+                android:scaleType="centerCrop"
+                android:background="@drawable/image_border" />
+
+            <Button
+                android:id="@+id/btnUploadImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Image"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#E6DD25" />
+        </LinearLayout>
+
+        <!-- FULL WIDTH -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Player Name"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#4CAF50"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etplayerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:hint="Enter player name"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- FULL WIDTH -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Father Name"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#4CAF50"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etfatherName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter father name"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- LEFT -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Surname"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#4CAF50"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etsurName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Surname"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- RIGHT -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NickName"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#4CAF50"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etnickName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nickname"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- EMAIL -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#4CAF50"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- AGE -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Age"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#4CAF50"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:hint="Age"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- MOBILE -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mobile"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#4CAF50"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etmobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:hint="Mobile"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- GENDER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Gender"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#4CAF50"
+                android:padding="6dp" />
+
+            <Spinner
+                android:id="@+id/etgenderspinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- ROLE -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Role"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#F44336"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etrole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Role"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- CATEGORY -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#F44336"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etcategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- STYLE -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Style"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#F44336"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Playing Style"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- BASE PRICE -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:background="#D9E2FA"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Base Price"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="#F44336"
+                android:padding="6dp" />
+
+            <EditText
+                android:id="@+id/etBasePrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:hint="Base Price"
+                android:background="@drawable/input_box" />
+        </LinearLayout>
+
+        <!-- SUBMIT -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="12dp">
-
-            <ImageView
-                android:id="@+id/playerImage"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@drawable/image_border"
-                android:scaleType="centerCrop"
-                android:src="@drawable/player" />
+            android:padding="8dp">
 
             <Button
+                android:id="@+id/btnSubmit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Upload Image" />
+                android:text="Submit"
+                android:backgroundTint="#2FA0E6" />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:layout_marginBottom="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#4CAF50"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Player Name"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etplayerName"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Enter name" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:layout_marginBottom="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#4CAF50"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Father Name"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etfatherName"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Enter father name" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginEnd="4dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#4CAF50"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Surname"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etsurName"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Surname" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#4CAF50"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="NickName"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etnickName"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Nickname" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginEnd="4dp"
-            android:layout_marginTop="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#4CAF50"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Gender"
-                android:textColor="#FFFFFF" />
-            <Spinner
-                android:id="@+id/etgenderspinner"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="2dp"
-                android:background="@android:color/white"
-                android:padding="5dp"
-                android:spinnerMode="dropdown" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginTop="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#4CAF50"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Mobile"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etmobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Mobile"
-                android:inputType="number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginEnd="4dp"
-            android:layout_marginTop="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F44336"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Role"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etrole"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Role" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginTop="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#4CAF50"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Age"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Age"
-                android:inputType="number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginEnd="4dp"
-            android:layout_marginTop="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F44336"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Category"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etcategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Category" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginTop="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F44336"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Style"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Style" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:layout_marginTop="8dp"
-            android:background="#D9E2FA"
-            android:orientation="vertical"
-            android:padding="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F44336"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="Base Price"
-                android:textColor="#FFFFFF" />
-            <EditText
-                android:id="@+id/etBasePrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_box"
-                android:hint=" Enter price"
-                android:inputType="number" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:text="Submit" />
 
     </GridLayout>
+
 </ScrollView>

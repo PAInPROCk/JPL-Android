@@ -12,6 +12,7 @@ import com.example.jpl2.network.ApiService;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -92,12 +93,13 @@ public class TeamRepository {
             RequestBody teamName,
             RequestBody captain,
             RequestBody mobile,
-            RequestBody email
+            RequestBody emailId,
+            MultipartBody.Part image
     ) {
 
         ApiService api = ApiClient.getClient(context).create(ApiService.class);
 
-        api.addTeam(teamName, captain, mobile, email)
+        api.addTeam(teamName, captain, mobile, emailId, image)
                 .enqueue(new Callback<ResponseBody>() {
 
                     @Override

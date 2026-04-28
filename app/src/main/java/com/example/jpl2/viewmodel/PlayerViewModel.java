@@ -32,12 +32,29 @@ public class PlayerViewModel extends ViewModel {
             RequestBody fatherName,
             RequestBody surName,
             RequestBody nickName,
+            RequestBody age,
+            RequestBody mobile,
+            RequestBody email,
+            RequestBody gender,
             RequestBody category,
             RequestBody style,
             RequestBody basePrice,
             MultipartBody.Part image
     ){
-        repository.addPlayer(context, playerName, fatherName, surName,
-                nickName, category, style, basePrice, image);
+        repository.addPlayer(
+                context,
+                playerName,
+                fatherName,
+                surName,
+                nickName,
+                age,
+                mobile,
+                email,
+                gender,
+                category,
+                style,
+                basePrice,
+                image
+        );
     }
 }

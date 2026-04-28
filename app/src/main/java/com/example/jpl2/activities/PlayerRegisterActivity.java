@@ -1,13 +1,16 @@
 package com.example.jpl2.activities;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,21 +18,38 @@ import com.example.jpl2.R;
 import com.example.jpl2.utils.SessionManager;
 import com.example.jpl2.viewmodel.PlayerViewModel;
 
+import java.io.InputStream;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class PlayerRegisterActivity extends AppCompatActivity {
 
-    EditText etPlayerName, etFatherName, etSurname, etAge, etMobile;
+    EditText etPlayerName, etFatherName, etSurname, etAge, etMobile, etEmail;
     EditText etRole, etCategory, etStyle, etBasePrice, etNickName;
 
-    Button btnSubmit;
+    ImageView playerImage;
+
+    Button btnSubmit, btnUploadImage;
+
+    Uri selectedImageUri;
 
     Spinner genderSpinner;
 
     PlayerViewModel viewModel;
     SessionManager session;
+
+    // File Picker Launcher
+
+    private final ActivityResultLauncher<String> imagePicker = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null){
+                    selectedImageUri = uri;
+                    playerImage.setImageURI(uri);
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +83,13 @@ public class PlayerRegisterActivity extends AppCompatActivity {
         // ----------------------------------
         // Views
         // ----------------------------------
+        playerImage = findViewById(R.id.playerImage);
         etPlayerName = findViewById(R.id.etplayerName);
         etFatherName = findViewById(R.id.etfatherName);
         etSurname = findViewById(R.id.etsurName);
         etAge = findViewById(R.id.etage);
         etMobile = findViewById(R.id.etmobile);
+        etEmail = findViewById(R.id.etEmail);
         etNickName = findViewById(R.id.etnickName);
 
         etRole = findViewById(R.id.etrole);
@@ -76,8 +98,10 @@ public class PlayerRegisterActivity extends AppCompatActivity {
         etBasePrice = findViewById(R.id.etBasePrice);
 
         genderSpinner = findViewById(R.id.etgenderspinner);
+        btnUploadImage = findViewById(R.id.btnUploadImage);
         btnSubmit = findViewById(R.id.btnSubmit);
 
+        btnUploadImage.setOnClickListener(v -> imagePicker.launch("image/*"));
         // ----------------------------------
         // Spinner
         // ----------------------------------
@@ -126,6 +150,8 @@ public class PlayerRegisterActivity extends AppCompatActivity {
 
         String mobile =
                 etMobile.getText().toString().trim();
+
+        String emailId = etEmail.getText().toString().trim();
 
         String nickname =
                 etNickName.getText().toString().trim();
@@ -176,6 +202,14 @@ public class PlayerRegisterActivity extends AppCompatActivity {
         RequestBody nickName =
                 body(nickname);
 
+        RequestBody ageBody = body(age);
+
+        RequestBody mobileBody = body(mobile);
+
+        RequestBody genderBody = body(gender);
+
+        RequestBody emailBody = body(emailId);
+
         RequestBody categoryBody =
                 body(category);
 
@@ -188,6 +222,38 @@ public class PlayerRegisterActivity extends AppCompatActivity {
         // TEMP no image upload
         MultipartBody.Part imagePart = null;
 
+        try {
+            if (selectedImageUri != null) {
+
+                InputStream inputStream =
+                        getContentResolver().openInputStream(selectedImageUri);
+
+                if (inputStream != null) {
+
+                    byte[] bytes = new byte[inputStream.available()];
+                    int read = inputStream.read(bytes);
+                    inputStream.close();
+
+                    if (read > 0) {
+                        RequestBody requestFile =
+                                RequestBody.create(
+                                        MediaType.parse("image/*"),
+                                        bytes
+                                );
+
+                        imagePart =
+                                MultipartBody.Part.createFormData(
+                                        "image",
+                                        "player.jpg",
+                                        requestFile
+                                );
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // ----------------------------------
         // API Call
         // ----------------------------------
@@ -196,7 +262,11 @@ public class PlayerRegisterActivity extends AppCompatActivity {
                 playerName,
                 fatherName,
                 surName,
-                nickName,
+                nickName,      // 4th
+                ageBody,       // 5th
+                mobileBody,
+                emailBody,
+                genderBody,
                 categoryBody,
                 styleBody,
                 basePrice,

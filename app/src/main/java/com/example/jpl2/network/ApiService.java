@@ -32,18 +32,25 @@ public interface ApiService {
     @GET("players")
     Call<PlayerResponse> getPlayers();
 
+
     @Multipart
     @POST("add-player")
     Call<ResponseBody> addPlayer(
+
             @Part("playerName") RequestBody playerName,
             @Part("fatherName") RequestBody fatherName,
             @Part("surName") RequestBody surName,
             @Part("nickName") RequestBody nickName,
+            @Part("age") RequestBody age,
+            @Part("mobile") RequestBody mobile,
+            @Part("emailId") RequestBody email,
+            @Part("gender") RequestBody gender,
             @Part("category") RequestBody category,
             @Part("style") RequestBody style,
             @Part("basePrice") RequestBody basePrice,
             @Part MultipartBody.Part image
     );
+
     @GET("teams")
     Call<TeamResponse> getTeams();
 
@@ -54,10 +61,12 @@ public interface ApiService {
     @Multipart
     @POST("add-team")
     Call<ResponseBody> addTeam(
+
             @Part("teamName") RequestBody teamName,
             @Part("captain") RequestBody captain,
             @Part("mobile") RequestBody mobile,
-            @Part("email") RequestBody email
+            @Part("emailId") RequestBody emailId,
+            @Part MultipartBody.Part image
     );
 
     @Multipart

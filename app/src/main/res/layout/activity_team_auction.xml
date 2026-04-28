@@ -51,7 +51,7 @@
                             android:padding="5dp"
                             android:background="@drawable/text_border_green"
                             android:text="Player Name"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"/>
                         <TextView
                             android:id="@+id/pName"
@@ -59,6 +59,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/text_border_grey"
                             android:textColor="@color/black"
+                            android:textColorHint="@color/black"
                             android:hint="Name"
                             android:padding="5dp"
                             android:layout_marginStart="3dp"/>
@@ -74,7 +75,7 @@
                             android:padding="5dp"
                             android:textStyle="bold"
                             android:textColor="#fff"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:background="@drawable/text_border_red"
                             android:text="Category: "/>
                         <TextView
@@ -82,6 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:hint="A"
+                            android:textColorHint="@color/black"
                             android:id="@+id/pCategory"
                             android:background="@drawable/text_border_grey"
                             android:textColor="@color/black"
@@ -100,6 +102,7 @@
                             android:padding="5dp"
                             android:background="@drawable/text_border_red"
                             android:text="Style: "
+                            android:textSize="12sp"
                             android:textColor="#fff"/>
                         <TextView
                             android:id="@+id/pStyle"
@@ -107,6 +110,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:hint="Right Hand"
+                            android:textColorHint="@color/black"
                             android:background="@drawable/text_border_grey"
                             android:textColor="@color/black"
                             android:padding="5dp"
@@ -253,15 +257,15 @@
                         android:src="@drawable/player"
                         android:layout_marginBottom="6dp"/>
 
-                    <!-- Current Bid -->
-                    <TextView
-                        android:id="@+id/teamBidPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹10500"
-                        android:textColor="#F44336"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
+<!--                    &lt;!&ndash; Current Bid &ndash;&gt;-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/teamBidPrice"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="₹10500"-->
+<!--                        android:textColor="#F44336"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textSize="16sp"/>-->
 
                     <!-- Purse -->
                     <TextView

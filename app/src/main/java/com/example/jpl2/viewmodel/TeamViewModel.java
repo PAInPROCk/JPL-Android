@@ -10,6 +10,7 @@ import com.example.jpl2.repository.TeamRepository;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class TeamViewModel extends ViewModel {
@@ -30,8 +31,9 @@ public class TeamViewModel extends ViewModel {
             RequestBody teamName,
             RequestBody captain,
             RequestBody mobile,
-            RequestBody email
+            RequestBody emailId,
+            MultipartBody.Part image
     ){
-        repository.addTeam(context, teamName, captain, mobile, email);
+        repository.addTeam(context, teamName, captain, mobile, emailId, image);
     }
 }

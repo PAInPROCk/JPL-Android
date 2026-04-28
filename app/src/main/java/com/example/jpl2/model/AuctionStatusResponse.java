@@ -1,9 +1,11 @@
 package com.example.jpl2.model;
 
 public class AuctionStatusResponse {
-    private boolean started;
+    private boolean active;
 
-    public boolean isStarted(){
-        return  started;
+    public boolean isActive(){
+        return  active;
     }
+
+    public boolean isStarted(){ return active; }
 }

@@ -15,8 +15,10 @@ import com.example.jpl2.R;
 import com.example.jpl2.api.ApiClient;
 import com.example.jpl2.model.AuctionStatusResponse;
 import com.example.jpl2.network.ApiService;
+import com.example.jpl2.network.SocketManager;
 import com.example.jpl2.utils.SessionManager;
 
+import io.socket.client.Socket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +31,7 @@ public class Waiting_Activity extends AppCompatActivity {
     private static final int POLL_DELAY = 3000;
 
     private SessionManager session;
+    private Socket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +39,6 @@ public class Waiting_Activity extends AppCompatActivity {
 
         session = new SessionManager(this);
 
-        // -------------------------------
-        // Protect Page (Only Team Users)
-        // -------------------------------
         if (!session.isLoggedIn()) {
             Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show();
             finish();
@@ -64,6 +64,16 @@ public class Waiting_Activity extends AppCompatActivity {
             }
         };
 
+        // SOCKET
+        socket = SocketManager.getSocket();
+        socket.connect();
+
+        socket.on("auction_started", args ->
+                runOnUiThread(this::openAuctionPage));
+
+        socket.on("auction_status", args ->
+                runOnUiThread(this::openAuctionPage));
+
         getOnBackPressedDispatcher().addCallback(this,
                 new OnBackPressedCallback(true) {
                     @Override
@@ -77,27 +87,24 @@ public class Waiting_Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (handler != null && checkAuctionStatus != null) {
-            handler.post(checkAuctionStatus);
-        }
+        handler.post(checkAuctionStatus);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        if (handler != null) {
-            handler.removeCallbacks(checkAuctionStatus);
-        }
+        handler.removeCallbacks(checkAuctionStatus);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if (handler != null) {
-            handler.removeCallbacks(checkAuctionStatus);
+        handler.removeCallbacks(checkAuctionStatus);
+
+        if (socket != null) {
+            socket.off("auction_started");
+            socket.off("auction_status");
         }
     }
 
@@ -105,9 +112,7 @@ public class Waiting_Activity extends AppCompatActivity {
 
         ApiService api = ApiClient.getClient(this).create(ApiService.class);
 
-        Call<AuctionStatusResponse> call = api.getAuctionStatus();
-
-        call.enqueue(new Callback<>() {
+        api.getAuctionStatus().enqueue(new Callback<AuctionStatusResponse>() {
 
             @Override
             public void onResponse(
@@ -117,15 +122,7 @@ public class Waiting_Activity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
 
                     if (response.body().isStarted()) {
-
-                        handler.removeCallbacks(checkAuctionStatus);
-
-                        startActivity(new Intent(
-                                Waiting_Activity.this,
-                                Team_Auction_Activity.class
-                        ));
-
-                        finish();
+                        openAuctionPage();
                     }
                 }
             }
@@ -136,5 +133,17 @@ public class Waiting_Activity extends AppCompatActivity {
                     @NonNull Throwable t) {
             }
         });
+    }
+
+    private void openAuctionPage() {
+
+        handler.removeCallbacks(checkAuctionStatus);
+
+        startActivity(new Intent(
+                Waiting_Activity.this,
+                Team_Auction_Activity.class
+        ));
+
+        finish();
     }
 }

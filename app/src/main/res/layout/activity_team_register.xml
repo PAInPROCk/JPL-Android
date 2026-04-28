@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="#FBFF2C"
+    android:background="@drawable/home_bg"
     android:layout_height="match_parent"
     tools:context=".activities.TeamRegister">
 
@@ -29,8 +29,10 @@
                 android:scaleType="centerCrop"
                 android:background="@drawable/image_border"/>
             <Button
+                android:id="@+id/btnUploadImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#E6DD25"
                 android:text="Upload Image"
                 android:layout_marginTop="8dp"/>
         </LinearLayout>
@@ -59,6 +61,8 @@
                 android:id="@+id/etTeamName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:background="@drawable/input_box"
                 android:hint="  Enter team name"
                 android:inputType="text" />
@@ -87,6 +91,8 @@
                 android:id="@+id/etCaptain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:background="@drawable/input_box"
                 android:hint="  Enter captain name"
                 android:inputType="text" />
@@ -115,6 +121,8 @@
                 android:id="@+id/etMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:background="@drawable/input_box"
                 android:hint="  Enter Mobile Number"
                 android:inputType="number" />
@@ -144,13 +152,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_box"
+                android:gravity="center"
+                android:textColor="@color/black"
                 android:hint="  Enter email"
                 android:inputType="textEmailAddress" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FBFF2C"
             android:layout_columnWeight="1"
             android:orientation="vertical"
             android:layout_marginTop="10dp"
@@ -162,6 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Submit"
+                android:backgroundTint="#2FA0E6"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
     </GridLayout>

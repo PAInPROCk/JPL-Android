@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ImageView;
+import android.net.Uri;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,14 +16,19 @@ import com.example.jpl2.R;
 import com.example.jpl2.utils.SessionManager;
 import com.example.jpl2.viewmodel.TeamViewModel;
 
+import java.io.InputStream;
+
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class TeamRegisterActivity extends AppCompatActivity {
 
     EditText etTeamName, etCaptain, etMobile, etEmail;
-    Button btnSubmit;
+    Button btnSubmit, btnUploadImage;
 
+    Uri selectedImageUri;
+    ImageView teamImage;
     TeamViewModel viewModel;
     SessionManager session;
 
@@ -60,6 +69,8 @@ public class TeamRegisterActivity extends AppCompatActivity {
         etMobile = findViewById(R.id.etMobile);
         etEmail = findViewById(R.id.email);
         btnSubmit = findViewById(R.id.btnSubmit);
+        teamImage = findViewById(R.id.playerImage);
+        btnUploadImage = findViewById(R.id.btnUploadImage);
 
         // ----------------------------------
         // ViewModel
@@ -72,8 +83,19 @@ public class TeamRegisterActivity extends AppCompatActivity {
         // Submit Button
         // ----------------------------------
         btnSubmit.setOnClickListener(v -> submitTeam());
+        btnUploadImage.setOnClickListener(v -> imagePicker.launch("image/*"));
     }
 
+    //Team image picker logic
+    private final ActivityResultLauncher<String> imagePicker = registerForActivityResult(
+            new ActivityResultContracts.GetContent(), uri -> {
+                if(uri != null){
+                    selectedImageUri = uri;
+
+                    teamImage.setImageURI(uri);
+                }
+            }
+    );
     // ----------------------------------
     // Submit Logic
     // ----------------------------------
@@ -103,6 +125,40 @@ public class TeamRegisterActivity extends AppCompatActivity {
 
             return;
         }
+        MultipartBody.Part imagePart = null;
+
+        try {
+            if (selectedImageUri != null) {
+
+                InputStream inputStream =
+                        getContentResolver()
+                                .openInputStream(selectedImageUri);
+
+                if (inputStream != null) {
+
+                    byte[] bytes =
+                            new byte[inputStream.available()];
+
+                    inputStream.read(bytes);
+                    inputStream.close();
+
+                    RequestBody requestFile =
+                            RequestBody.create(
+                                    MediaType.parse("image/*"),
+                                    bytes
+                            );
+
+                    imagePart =
+                            MultipartBody.Part.createFormData(
+                                    "image",
+                                    "team.jpg",
+                                    requestFile
+                            );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         RequestBody teamNameBody = body(teamName);
         RequestBody captainBody = body(captain);
@@ -114,7 +170,8 @@ public class TeamRegisterActivity extends AppCompatActivity {
                 teamNameBody,
                 captainBody,
                 mobileBody,
-                emailBody
+                emailBody,
+                imagePart
         );
 
         Toast.makeText(this,

@@ -49,26 +49,45 @@ public class PlayerRepository {
             RequestBody fatherName,
             RequestBody surName,
             RequestBody nickName,
+
+            RequestBody age,
+            RequestBody mobile,
+            RequestBody gender,
+            RequestBody emailId,
+
             RequestBody category,
             RequestBody style,
             RequestBody basePrice,
+
             MultipartBody.Part image
-    ){
+    ) {
+
         ApiService api = ApiClient.getClient(context).create(ApiService.class);
 
-        api.addPlayer(playerName, fatherName, surName, nickName,
-                        category, style, basePrice, image)
+        api.addPlayer(
+                playerName,
+                fatherName,
+                surName,
+                nickName,
+                age,
+                mobile,
+                emailId,
+                gender,
+                category,
+                style,
+                basePrice,
+                image
+        ).enqueue(new Callback<ResponseBody>() {
 
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Log.d("PLAYER_ADD", "Success: " + response.code());
-                    }
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d("PLAYER_ADD", "Success: " + response.code());
+            }
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.e("PLAYER_ADD", "Error: " + t.getMessage());
-                    }
-                });
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("PLAYER_ADD", "Error: " + t.getMessage());
+            }
+        });
     }
 }
